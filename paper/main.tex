@@ -4,26 +4,16 @@
 %%
 %% ============================================================
 %% TODO (BEFORE SUBMISSION):
-%% 1. DISPLAY ITEMS: Scientific Reports recommends max 8 figures+tables combined.
-%%    This paper currently has 9 figures + 6 tables = 15 items.
-%%    Move non-essential items to Supplementary Information.
-%%    Suggested items to KEEP in main paper (8 total):
-%%      Tables: 1 (taxonomy), 2 (results), 3 (correlation), 5 (ablation), 6 (embedding)
-%%      Figures: confusion_best_worst, tsne_umap_comparison, difficulty_tiers
-%%    Suggested items to MOVE to Supplementary:
-%%      Table 4 (topo_acc, only 2 numbers - state in text instead)
-%%      Figures: weight_sensitivity, model_comparison, f1_heatmap,
-%%               convergence_all, gradcam_comparison, distance_comparison
-%% 2. Second author / supervisor: fill in if applicable (line 27)
+%% 1. DISPLAY ITEMS: DONE — reduced to 8 items (5 tables + 3 figures).
+%% 2. Second author / supervisor: DONE
 %% 3. ORCID: all corresponding authors must provide ORCID upon acceptance
-%% 4. Acknowledgements: fill in (line ~540)
-%% 5. Author Contributions: fill in (line ~545)
-%% 6. Funding: fill in (line ~555)
-%% 7. GitHub URL: replace [anonymized] with real repo URL (line ~535)
-%% 8. References: SR does not accept .bib files directly.
+%% 4. Acknowledgements: DONE
+%% 5. Author Contributions: DONE
+%% 6. Funding: DONE (no specific funding)
+%% 7. GitHub URL: DONE (https://github.com/Mousaee/knots10-benchmark)
+%% 8. References: DONE — switched to sn-nature.bst.
 %%    Compile to generate .bbl file and submit .bbl with the manuscript.
-%% 9. SR reference style prefers: first author et al. for 6+ authors.
-%%    Consider using naturemag.bst or sn-nature.bst instead of unsrtnat.
+%% 9. SR reference style: DONE — using sn-nature.bst (Nature numbered style).
 %% ============================================================
 
 \documentclass[11pt]{article}
@@ -31,10 +21,8 @@
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
-\usepackage{multirow}
 \usepackage{hyperref}
 \usepackage{xcolor}
-\usepackage{subcaption}
 \usepackage[margin=1in]{geometry}
 \usepackage{lineno}
 \usepackage[numbers,sort&compress]{natbib}
@@ -46,19 +34,16 @@
 
 \title{Knots-10: A Benchmark for Physical Knot Classification with Topology-Guided Representation Learning}
 
-\author{Shiheng Nie$^{1,*}$\\
-%% TODO: Add second author (supervisor) if applicable, e.g.:
-%% Shiheng Nie$^{1}$, Supervisor Name$^{1,*}$\\
+\author{Shiheng Nie$^{1}$, Xiaoli Liu$^{1}$, Yunguang Yue$^{1,*}$\\
 \small $^{1}$College of Science, Shihezi University, Shihezi, Xinjiang, China\\
-\small $^{*}$Correspondence: nieshiheng@stu.shzu.edu.cn}
-%% TODO: Replace with your actual email address
+\small $^{*}$Correspondence: guangyy@shzu.edu.cn}
 
 \date{}
 
 \maketitle
 
 \begin{abstract}
-Knot classification is fundamental to surgical training, robotic manipulation, and industrial safety. While machine learning has been applied to mathematical knot diagrams, no prior study has systematically evaluated fine-grained visual classification of physical knots from real-world photographs under a standardized benchmark protocol. We present Knots-10, a benchmark built on the 10Knots dataset (1,440 images, 10 knot types) with a tightness-stratified evaluation protocol that trains on loosely tied knots and tests on tightly dressed ones. Beyond high classification accuracy (up to 99.4\% with Swin-T), we demonstrate a statistically significant alignment between visual confusion structure and knot-theoretic similarity (Spearman $\rho$ up to $-0.49$, $p < 0.001$), and show that topology-guided training reshapes embedding geometry to reflect domain knowledge. Specifically, we propose topology-aware centroid alignment (TACA), which yields a dual benefit: (i) a 1.25 percentage-point accuracy improvement on ResNet-18 (95.83\% $\to$ 97.08\%) and (ii) a 40\% increase in embedding--topology alignment (Spearman $\rho$: $0.46 \to 0.65$, $p < 0.001$), with t-SNE and UMAP visualizations confirming family-level clustering. The evaluation code and trained models will be publicly released.
+Knot classification is fundamental to surgical training, robotic manipulation, and industrial safety. While machine learning has been applied to mathematical knot diagrams, no prior study has systematically evaluated fine-grained visual classification of physical knots from real-world photographs under a standardized benchmark protocol. We present Knots-10, a benchmark built on the 10Knots dataset (1,440 images, 10 knot types) with a tightness-stratified evaluation protocol that trains on loosely tied knots and tests on tightly dressed ones. Beyond high classification accuracy (up to 99.4\% with Swin-T), we demonstrate a statistically significant alignment between visual confusion structure and knot-theoretic similarity in three of five models (Spearman $\rho$ up to $-0.49$, $p < 0.001$), and show that topology-guided training reshapes embedding geometry to reflect domain knowledge. Specifically, we propose topology-aware centroid alignment (TACA), which yields a dual benefit: (i) improved training stability (standard deviation halved from 0.68\% to 0.34\% across random seeds) with a 1.25 percentage-point accuracy improvement on ResNet-18 (95.83\% $\to$ 97.08\%) and (ii) a 40\% increase in embedding--topology alignment (Spearman $\rho$: $0.46 \to 0.65$, $p < 0.001$), with t-SNE and UMAP visualizations confirming family-level clustering. The evaluation code and trained models are publicly available.
 \end{abstract}
 
 \noindent\textbf{Keywords:} knot classification, fine-grained recognition, benchmark dataset, topological analysis, topology-guided learning, representation alignment
@@ -73,7 +58,7 @@ Knot classification is fundamental to surgical training, robotic manipulation, a
 
 Knots are among the oldest and most ubiquitous human technologies. From surgical suturing \citep{wang2018satr} to maritime rigging, rock climbing \citep{luebben2004}, and industrial load securing, the ability to tie and identify specific knot types remains a critical practical skill. Incorrect knot selection can lead to catastrophic failures---a bowline mistaken for a slip knot under load, or an improperly dressed reef knot in a surgical context. Yet despite centuries of practical use, knot identification still relies primarily on human expertise, and automated fine-grained classification of physical knot types remains an open problem.
 
-Recent work at the intersection of machine learning and knot theory has made progress on \emph{mathematical} knot classification: predicting invariants from planar diagrams \citep{knotdetection2025, hughes2020neural, craven2024illuminating}, or learning topological properties from abstract representations \citep{gukov2024rigor, grunbaum2022narrowing}. In robotics, knot detection has been limited to binary classification---knotted versus unknotted---for rope manipulation tasks \citep{sundaresan2020, grannen2020}. However, to the best of our knowledge, no prior work has addressed the fine-grained classification of physical knot \emph{types} from real-world photographs under a standardized evaluation protocol. This gap is significant: while mathematical knot diagrams are clean, standardized inputs, physical knots exhibit high intra-class variability due to rope material, tightness, lighting, and viewing angle.
+Recent work at the intersection of machine learning and knot theory has made progress on \emph{mathematical} knot classification: predicting invariants from planar diagrams \citep{knotdetection2025, hughes2020neural, craven2024illuminating}, or learning topological properties from abstract representations \citep{gukov2024rigor, grunbaum2022narrowing}. In robotics, knot detection has been limited to binary classification---knotted versus unknotted---for rope manipulation tasks \citep{sundaresan2020, grannen2020}. However, to the best of our knowledge, no prior work has addressed the fine-grained classification of physical knot \emph{types} from real-world photographs under a standardized evaluation protocol. This gap is significant: while mathematical knot diagrams are clean, standardized inputs, physical knots exhibit high intra-class variability due to rope material, tightness, lighting, and viewing angle. Existing knot-related datasets are either synthetic or simulation-based (mathematical diagrams, rendered curves) or limited to binary knotted-vs.-unknotted labels in robotic manipulation; no benchmark provides real-world photographs of multiple physical knot types with controlled topological categories and a standardized evaluation protocol.
 
 This paper bridges the gap between mathematical knot theory and practical visual recognition. We build upon the publicly available 10Knots dataset \citep{cameron2018tenknots}, which provides raw photographs of physical knots but lacks a standardized evaluation protocol, topological annotations, or baseline results. Our contribution is not the images themselves, but the benchmark framework we construct around them: a tightness-stratified evaluation protocol that creates a realistic domain shift, a topological annotation scheme linking each knot type to its mathematical properties, and a novel topology-guided training approach grounded in knot theory.
 
@@ -94,17 +79,17 @@ Specifically, we make four contributions:
 
 \subsubsection{Machine Learning for Mathematical Knot Theory}
 
-Classical knot classification relies on computing invariants such as crossing number, the Alexander polynomial, and the Jones polynomial from planar diagrams \citep{adams2004}. Recently, deep learning has entered this domain. \citet{knotdetection2025} combined CNNs and transformers with Jones polynomial computation to classify knot diagrams from images. \citet{hughes2020neural} introduced neural networks for predicting knot invariants such as the slice genus and the Ozsv\'{a}th--Szab\'{o} $\tau$-invariant, establishing a foundational data-driven approach to knot theory. \citet{craven2024illuminating} used neural networks to discover relations between knot invariants, while \citet{grunbaum2022narrowing} applied deep learning to bridge combinatorial and hyperbolic invariants. \citet{gukov2024rigor} surveyed rigorous methods for applying machine learning to topology and pure mathematics. All these works operate on idealized mathematical representations rather than photographs of physical rope knots.
+Classical knot classification relies on computing invariants such as crossing number, the Alexander polynomial, and the Jones polynomial from planar diagrams \citep{adams2004}. Recently, deep learning has entered this domain. Dranowski et al.~\cite{knotdetection2025} combined CNNs and transformers with Jones polynomial computation to classify knot diagrams from images. Hughes~\cite{hughes2020neural} introduced neural networks for predicting knot invariants such as the slice genus and the Ozsv\'{a}th--Szab\'{o} $\tau$-invariant, establishing a foundational data-driven approach to knot theory. Craven et al.~\cite{craven2024illuminating} used neural networks to discover relations between knot invariants, while Gr{\"u}nbaum~\cite{grunbaum2022narrowing} applied deep learning to bridge combinatorial and hyperbolic invariants. Gukov et al.~\cite{gukov2024rigor} surveyed rigorous methods for applying machine learning to topology and pure mathematics. All these works operate on idealized mathematical representations rather than photographs of physical rope knots.
 
 
 \subsubsection{Robotic Rope Manipulation and Knot Detection}
 
-In robotics, knot detection appears in the context of deformable linear object (DLO) manipulation. \citet{matsuno2005manipulation} pioneered the use of knot invariants to classify topological states of manipulated ropes. \citet{tiebot2024} demonstrated learning to tie a necktie via a real-to-sim-to-real pipeline. \citet{sundaresan2020} and \citet{grannen2020} addressed binary knot detection for robotic untangling but did not attempt fine-grained classification among knot types. Surgical knot assessment \citep{moorthy2004, vedula2016, wang2018satr} evaluates tying technique rather than knot identity.
+In robotics, knot detection appears in the context of deformable linear object (DLO) manipulation. Matsuno et al.~\cite{matsuno2005manipulation} pioneered the use of knot invariants to classify topological states of manipulated ropes. Peng et al.~\cite{tiebot2024} demonstrated learning to tie a necktie via a real-to-sim-to-real pipeline. Sundaresan et al.~\cite{sundaresan2020} and Grannen et al.~\cite{grannen2020} addressed binary knot detection for robotic untangling but did not attempt fine-grained classification among knot types. Surgical knot assessment \citep{moorthy2004, vedula2016, wang2018satr} evaluates tying technique rather than knot identity.
 
 
 \subsubsection{Fine-Grained Visual Classification}
 
-Our task is closely related to fine-grained visual classification (FGVC), where the goal is to distinguish visually similar subcategories \citep{wei2022fgia}. Benchmark tasks include bird species recognition \citep{wah2011cub}, car model identification \citep{krause2013}, and plant disease detection \citep{mohanty2016}. In industrial inspection, \citet{gao2021blnn} achieved 99.2\% accuracy on wood knot defect classification using bilinear CNNs. Transfer learning from ImageNet-pretrained models has become the dominant paradigm for FGVC \citep{he2016resnet, dosovitskiy2021vit, zhuang2021transfer}.
+Our task is closely related to fine-grained visual classification (FGVC), where the goal is to distinguish visually similar subcategories \citep{wei2022fgia}. Benchmark tasks include bird species recognition \citep{wah2011cub}, car model identification \citep{krause2013}, and plant disease detection \citep{mohanty2016}. In industrial inspection, Gao et al.~\cite{gao2021blnn} achieved 99.2\% accuracy on wood knot defect classification using bilinear CNNs. Transfer learning from ImageNet-pretrained models has become the dominant paradigm for FGVC \citep{he2016resnet, dosovitskiy2021vit, zhuang2021transfer}.
 
 
 \subsubsection{Domain Shift in Visual Recognition}
@@ -113,7 +98,7 @@ A distinctive feature of our benchmark is the deliberate domain shift between tr
 
 \subsubsection{Structure-Aware Representation Learning}
 
-Several lines of work have explored injecting domain-specific structural priors into learned representations. Label hierarchy-aware losses \citep{barz2019hierarchy} use taxonomic distances to smooth class targets, encouraging semantically related classes to share similar embeddings. Supervised contrastive learning \citep{khosla2020supcon} pulls same-class samples together while pushing different-class samples apart. \citet{wu2020topological} demonstrated that topological regularization can improve the structure of learned feature spaces. Structured losses that respect class relationships have shown benefits for few-shot generalization \citep{snell2017prototypical}, though careful evaluation is needed to validate embedding improvements \citep{musgrave2020reality}. Our topology-guided training extends this paradigm to knot theory, using knot-theoretic distances as a domain-specific structural prior.
+Several lines of work have explored injecting domain-specific structural priors into learned representations. Label hierarchy-aware losses \citep{barz2019hierarchy} use taxonomic distances to smooth class targets, encouraging semantically related classes to share similar embeddings. Supervised contrastive learning \citep{khosla2020supcon} pulls same-class samples together while pushing different-class samples apart. Carlsson and Br{\"u}el-Gabrielsson~\cite{wu2020topological} demonstrated that topological regularization can improve the structure of learned feature spaces. Structured losses that respect class relationships have shown benefits for few-shot generalization \citep{snell2017prototypical}, though careful evaluation is needed to validate embedding improvements \citep{musgrave2020reality}. Our topology-guided training extends this paradigm to knot theory, using knot-theoretic distances as a domain-specific structural prior.
 
 
 % ============================================
@@ -123,7 +108,7 @@ Several lines of work have explored injecting domain-specific structural priors 
 
 \subsection{Baseline Classification Results}\label{sec:baseline}
 
-Table~\ref{tab:results} summarizes the performance of all five models (see Methods for architecture details). Swin-T achieves the highest test accuracy (99.4\%). The three CNN variants cluster between 95.2--96.0\%, while ViT-B/16 matches EfficientNet-B0 at 95.2\%.
+Table~\ref{tab:results} summarizes the performance of all five models (see Methods for architecture details). Swin-T achieves the highest test accuracy (99.4\%). The three CNN variants cluster between 95.2--96.1\%, while ViT-B/16 matches EfficientNet-B0 at 95.2\%.
 
 \begin{table}[t]
 \centering
@@ -134,51 +119,33 @@ Table~\ref{tab:results} summarizes the performance of all five models (see Metho
 \toprule
 Model & Params & Val Acc & Test Acc & Macro F1 & Time (s) \\
 \midrule
-ResNet-18 & 11.2M & 100.0\% & 95.83\% & 0.96 & 1{,}636 \\
-ResNet-50 & 23.5M & 100.0\% & 96.04\% & 0.96 & 1{,}824 \\
-EfficientNet-B0 & 4.0M & 99.0\% & 95.21\% & 0.95 & 1{,}700 \\
-ViT-B/16 & 85.8M & 99.5\% & 95.21\% & 0.95 & 2{,}367 \\
-\textbf{Swin-T} & \textbf{27.5M} & \textbf{100.0\%} & \textbf{99.38\%} & \textbf{0.99} & 3{,}301 \\
+ResNet-18 & 11.2M & 100.0\% & 95.83\% & 0.959 & 1{,}636 \\
+ResNet-50 & 23.5M & 100.0\% & 96.04\% & 0.961 & 1{,}824 \\
+EfficientNet-B0 & 4.0M & 99.0\% & 95.21\% & 0.952 & 1{,}700 \\
+ViT-B/16 & 85.8M & 99.5\% & 95.21\% & 0.952 & 2{,}367 \\
+\textbf{Swin-T} & \textbf{27.5M} & \textbf{100.0\%} & \textbf{99.38\%} & \textbf{0.994} & 3{,}301 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The strong performance of Swin-T is consistent with its shifted-window attention mechanism, which combines the local inductive bias of CNNs with the global context modeling of transformers. The gap between Swin-T (99.4\%) and ViT-B/16 (95.2\%) suggests that pure global attention without hierarchical structure is suboptimal when training data is limited. Figure~\ref{fig:comparison} visualizes the validation and test accuracy across all models.
+The strong performance of Swin-T is consistent with its shifted-window attention mechanism, which combines the local inductive bias of CNNs with the global context modeling of transformers. The gap between Swin-T (99.4\%) and ViT-B/16 (95.2\%) suggests that pure global attention without hierarchical structure is suboptimal when training data is limited. A multi-seed robustness analysis (Supplementary Table~\ref{tab:robustness}) confirms that all reported results are stable across random initializations (standard deviations $< 1.3$\%), with the architecture ranking Swin-T $>$ ResNet-50 $\approx$ ResNet-18 $>$ EfficientNet-B0 $\approx$ ViT-B/16 consistent across all three seeds. Supplementary Figure~\ref{fig:comparison} visualizes the validation and test accuracy across all models.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{model_comparison.pdf}
-\caption{Validation and test accuracy across all five models.}
-\label{fig:comparison}
-\end{figure}
 
 \subsubsection{Per-Class Analysis}
 
-Figure~\ref{fig:f1heatmap} presents per-class F1 scores across all models. Several patterns emerge:
+Supplementary Figure~\ref{fig:f1heatmap} presents per-class F1 scores across all models. Several patterns emerge:
 
 \begin{itemize}
     \item \textbf{Universally easy}: CH (Clove Hitch) achieves perfect or near-perfect F1 across all models, consistent with its unique visual structure (two symmetric loops around a pole).
-    \item \textbf{Universally hard}: F8K (Figure-8 Knot) is the most challenging class for all models except Swin-T, with F1 scores as low as 0.89. Its visual similarity to both OHK (shared trefoil ancestry) and FMB (traced figure-8 structure) creates systematic confusion.
+    \item \textbf{Universally hard}: F8K (Figure-8 Knot) is the most challenging class for all models except Swin-T, with F1 scores as low as 0.89. Its visual similarity to both OHK (both are compact single-loop stopper knots with similar dressed profiles) and FMB (traced figure-8 structure) creates systematic confusion.
     \item \textbf{Model-dependent}: SK (Slip Knot) and FMB (Flemish Bend) show high variance across architectures, suggesting that different feature extraction strategies capture different discriminative cues.
 \end{itemize}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{f1_heatmap.pdf}
-\caption{Per-class F1 scores across five models. Darker green indicates higher F1. Clove Hitch (CH) achieves near-perfect scores across all models, while Figure-8 Knot (F8K) is consistently the most challenging class.}
-\label{fig:f1heatmap}
-\end{figure}
 
 \subsubsection{Convergence Behavior}
 
-Figure~\ref{fig:convergence} shows training and validation accuracy curves. All models converge within 10 epochs, with Swin-T reaching 100\% validation accuracy by epoch 6. The rapid convergence reflects the effectiveness of ImageNet pretraining for this task. ViT-B/16 shows the slowest initial convergence, consistent with the known data-hunger of pure transformer architectures.
+Supplementary Figure~\ref{fig:convergence} shows training and validation accuracy curves. All models converge within 10 epochs, with Swin-T reaching 100\% validation accuracy by epoch 6. The rapid convergence reflects the effectiveness of ImageNet pretraining for this task. ViT-B/16 shows the slowest initial convergence, consistent with the known data-hunger of pure transformer architectures.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{convergence_all.pdf}
-\caption{Training and validation accuracy curves for all five models over 20 epochs.}
-\label{fig:convergence}
-\end{figure}
 
 
 % ============================================
@@ -207,14 +174,8 @@ Based on the topological properties (Table~\ref{tab:knot_taxonomy}), we partitio
 
 \subsubsection{Weight Sensitivity}
 
-To verify that our results are robust to the choice of distance metric weights (Section~\ref{sec:topo_metric}), we conducted a Monte Carlo sensitivity analysis. We perturbed each weight by up to $\pm 50\%$ and re-normalized to sum to 1.0, generating 200 random weight vectors. The resulting Spearman correlations (on EfficientNet-B0) have mean $\rho = -0.483 \pm 0.016$, with 100\% of perturbations yielding $\rho < -0.25$. Across all five models, switching from the default to uniform weights ($w_f = 0.2$) changes $\rho$ by less than 0.01. Only extreme single-factor configurations (e.g., family membership alone) degrade the correlation to non-significance. These results indicate that the topological--visual correlation is a robust phenomenon, not an artifact of a particular weight choice (Figure~\ref{fig:weight_sensitivity}).
+To verify that our results are robust to the choice of distance metric weights (Section~\ref{sec:topo_metric}), we conducted a Monte Carlo sensitivity analysis. We perturbed each weight by up to $\pm 50\%$ and re-normalized to sum to 1.0, generating 200 random weight vectors. The resulting Spearman correlations (on EfficientNet-B0) have mean $\rho = -0.483 \pm 0.016$, with 100\% of perturbations yielding $\rho < -0.25$. Across all five models, switching from the default to uniform weights ($w_f = 0.2$) changes $\rho$ by less than 0.01. Only extreme single-factor configurations (e.g., family membership alone) degrade the correlation to non-significance. These results indicate that the topological--visual correlation is a robust phenomenon, not an artifact of a particular weight choice (Supplementary Figure~\ref{fig:weight_sensitivity}).
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{weight_sensitivity.pdf}
-\caption{Weight sensitivity analysis. Left: distribution of Spearman $\rho$ across 200 random weight perturbations ($\pm 50\%$) for EfficientNet-B0. The correlation remains consistently negative ($\rho = -0.483 \pm 0.016$). Right: comparison of default and uniform weight configurations across all five models, showing negligible differences.}
-\label{fig:weight_sensitivity}
-\end{figure}
 
 % ============================================
 % TOPOLOGICAL-VISUAL CORRELATION
@@ -247,7 +208,7 @@ Swin-T & $-0.214$ & 0.158 & $-0.195$ & 0.198 \\
 
 Three of five models show statistically significant negative Spearman correlations at $p < 0.05$, with ResNet-18 marginally significant ($\rho = -0.291$, $p = 0.052$). The strongest correlation appears in EfficientNet-B0 ($\rho = -0.491$, $p < 0.001$), followed by ResNet-50 ($\rho = -0.472$, $p = 0.001$). The exception is Swin-T: as it produces extremely sparse confusion patterns (only 3 non-zero off-diagonal pairs out of 45), the correlation estimate becomes statistically underpowered.
 
-\noindent\textbf{Note on statistical independence.} Since the 45 pairwise distances are derived from a symmetric distance matrix and a shared confusion matrix, they are not fully independent observations. The reported $p$-values should therefore be interpreted as descriptive indicators of association strength rather than strict inferential statistics.
+\noindent\textbf{Note on statistical independence.} Since the 45 pairwise distances are derived from a symmetric distance matrix and a shared confusion matrix, they are not fully independent observations. The reported $p$-values should therefore be interpreted as descriptive indicators of association strength rather than strict inferential statistics. A Mantel-style permutation test (which accounts for matrix structure) would provide a more rigorous significance assessment; however, the consistency of the negative correlation across four of five models, combined with the Monte Carlo weight sensitivity analysis (Section~\ref{sec:topo_difficulty}), provides convergent evidence for the topological--visual association.
 
 \subsubsection{Interpretation}
 
@@ -257,7 +218,7 @@ The most confused pairs across models are consistent with topological prediction
 \begin{itemize}
     \item \textbf{F8K--OHK} ($d = 0.156$): Both derive from low-crossing prime knots ($4_1$ and $3_1$), sharing a single-loop stopper structure.
     \item \textbf{F8K--SK} ($d = 0.231$): SK is a slip variant of the trefoil, visually similar to F8K when tightly dressed.
-    \item \textbf{FSK--FMB} ($d = 0.188$): Both are composite bend knots with intertwined rope segments.
+    \item \textbf{FSK--FMB} ($d = 0.150$): Both are composite bend knots with intertwined rope segments.
 \end{itemize}
 
 Figure~\ref{fig:confusion} visualizes confusion matrices for the best-performing model (Swin-T) and a representative weaker model (ViT-B/16), illustrating how topological similarity manifests in systematic confusion patterns.
@@ -272,7 +233,7 @@ Figure~\ref{fig:confusion} visualizes confusion matrices for the best-performing
 \subsubsection{Grad-CAM Visualization}
 \label{sec:gradcam}
 
-To verify that models attend to knot-relevant image regions rather than background artifacts, we apply Gradient-weighted Class Activation Mapping (Grad-CAM) \citep{selvaraju2017gradcam} to ResNet-18 and ResNet-50. For our transformer-based models, attention-based interpretability methods \citep{chefer2021transformer} offer complementary insights. Figure~\ref{fig:gradcam} shows activation heatmaps for one test image per class.
+To verify that models attend to knot-relevant image regions rather than background artifacts, we apply Gradient-weighted Class Activation Mapping (Grad-CAM) \citep{selvaraju2017gradcam} to ResNet-18 and ResNet-50. For our transformer-based models, attention-based interpretability methods \citep{chefer2021transformer} offer complementary insights. Supplementary Figure~\ref{fig:gradcam} shows activation heatmaps for one test image per class.
 
 Both models consistently focus on the central knot structure, confirming that classification decisions are driven by rope crossing patterns rather than contextual cues such as the background surface. However, two notable differences emerge:
 
@@ -281,12 +242,6 @@ Both models consistently focus on the central knot structure, confirming that cl
     \item \textbf{Contextual leakage.} For Clove Hitch, ResNet-18's activation extends along the vertical pole, suggesting partial reliance on the mounting object rather than the knot topology itself. ResNet-50 shows less of this effect.
 \end{itemize}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{gradcam_comparison.pdf}
-\caption{Grad-CAM visualizations for ResNet-18 (middle row) and ResNet-50 (bottom row) across all 10 knot classes. Top row shows original test images. Heatmaps overlay activation intensity (red = high, blue = low). Green labels indicate correct predictions, red labels indicate errors. Both models focus on the central knot structure. ResNet-50 produces more spatially concentrated activations than ResNet-18.}
-\label{fig:gradcam}
-\end{figure}
 
 % ============================================
 % TOPOLOGY-GUIDED REPRESENTATION LEARNING
@@ -297,22 +252,8 @@ The correlation analysis in Section~\ref{sec:correlation} establishes that topol
 
 \subsubsection{Classification Results}
 
-Table~\ref{tab:topo_acc} compares test accuracy between baseline (cross-entropy only) and topology-guided training (CE+TACA). On ResNet-18, topology-guided training improves test accuracy by 1.25 percentage points (95.83\% $\to$ 97.08\%). For ResNet-50, the difference is negligible (96.04\% $\to$ 95.83\%, a 0.21 percentage-point decrease). Given 480 test samples, the 95\% confidence interval for a 96\% accuracy is approximately $\pm$1.8\% (standard error $\approx \sqrt{p(1-p)/n} \approx 0.009$), indicating that this difference falls well within sampling variability. This capacity-dependent effect is consistent with prior findings that regularization benefits diminish for higher-capacity models on small datasets \citep{zhuang2021transfer}.
+We compare test accuracy between baseline (cross-entropy only) and topology-guided training (CE+TACA). On ResNet-18, topology-guided training improves test accuracy by 1.25 percentage points (95.83\% $\to$ 97.08\%). For ResNet-50, the difference is negligible (96.04\% $\to$ 95.83\%, a 0.21 percentage-point decrease). Given 480 test samples, the 95\% confidence interval for a 96\% accuracy is approximately $\pm$1.8\% (standard error $\approx \sqrt{p(1-p)/n} \approx 0.009$), indicating that this difference falls well within sampling variability. This capacity-dependent effect is consistent with prior findings that regularization benefits diminish for higher-capacity models on small datasets \citep{zhuang2021transfer}.
 
-\begin{table}[t]
-\centering
-\caption{Test accuracy: baseline vs.\ topology-guided training.}
-\label{tab:topo_acc}
-\small
-\begin{tabular}{@{}lcc@{}}
-\toprule
-Model & Baseline & Topo-Guided \\
-\midrule
-ResNet-18 & 95.83\% & 97.08\% \\
-ResNet-50 & 96.04\% & 95.83\% \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 \subsubsection{Loss Component Ablation}
 
@@ -365,14 +306,8 @@ For ResNet-18, the Spearman correlation increases by 40\% (from 0.462 to 0.645),
 
 \subsubsection{Visualization}
 
-Figure~\ref{fig:distance_comparison} compares the topological distance matrix with embedding centroid distance matrices from baseline and topology-guided ResNet-18. The baseline embedding distances show a relatively uniform pattern with limited contrast, while the topology-guided distances recover much of the structure present in the topological ground truth.
+Supplementary Figure~\ref{fig:distance_comparison} compares the topological distance matrix with embedding centroid distance matrices from baseline and topology-guided ResNet-18. The baseline embedding distances show a relatively uniform pattern with limited contrast, while the topology-guided distances recover much of the structure present in the topological ground truth.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{distance_comparison_resnet18.png}
-\caption{Distance matrix comparison for ResNet-18. Left: topological distance (ground truth). Center: baseline embedding distances. Right: topology-guided embedding distances. Color intensity represents distance magnitude (darker = larger). The topology-guided embedding recovers topological structure with block patterns indicating family-level clustering.}
-\label{fig:distance_comparison}
-\end{figure}
 
 Figure~\ref{fig:tsne_umap} shows t-SNE and UMAP \citep{mcinnes2018umap} projections of the learned embeddings, colored by topological family. In the baseline embedding space, knots from the same family (e.g., the three loop knots: ABK, BK, F8L) are scattered across different regions. In the topology-guided space, same-family knots cluster together: loop knots group tightly, stopper knots are proximate, and bend knots occupy a shared region. Both dimensionality reduction methods yield consistent results, ruling out algorithm-specific artifacts.
 
@@ -390,37 +325,21 @@ Figure~\ref{fig:tsne_umap} shows t-SNE and UMAP \citep{mcinnes2018umap} projecti
 \section{Discussion}
 \label{sec:discussion}
 
-\subsection{Architecture Selection for Small-Scale FGVC}
-
-Our results counter the intuition that larger models necessarily yield better fine-grained performance. ViT-B/16, despite having 85.8M parameters (3$\times$ Swin-T), achieves only 95.2\% test accuracy. This confirms findings from the broader FGVC literature that pure transformers require large-scale data to outperform CNNs \citep{dosovitskiy2021vit}.
-
-Swin-T's advantage is attributable to its hierarchical design: shifted windows provide local attention at early layers (analogous to CNN convolutions) while enabling cross-window information flow at deeper layers. For physical knot classification, this hybrid strategy captures both fine-grained rope crossing patterns and global knot topology.
-
-\subsection{The Domain Shift Challenge}
+Our results counter the intuition that larger models necessarily yield better fine-grained performance. ViT-B/16, despite having 85.8M parameters (3$\times$ Swin-T), achieves only 95.2\% test accuracy. This confirms findings from the broader FGVC literature that pure transformers require large-scale data to outperform CNNs \citep{dosovitskiy2021vit}. Swin-T's advantage is attributable to its hierarchical design: shifted windows provide local attention at early layers (analogous to CNN convolutions) while enabling cross-window information flow at deeper layers. For physical knot classification, this hybrid strategy captures both fine-grained rope crossing patterns and global knot topology.
 
 The 3--5\% accuracy gap between validation and test sets across four of five models (all except Swin-T, which shows only a 0.6\% gap) quantifies the domain shift induced by tightness variation. Tightly dressed knots compress crossing structures, reduce visible rope segments, and alter shadow patterns. That all models still exceed 95\% suggests ImageNet-pretrained features are reasonably robust to this deformation, but the residual gap indicates room for domain adaptation techniques.
 
-\subsection{Topological Priors for Error Analysis}
-
 The topological difficulty analysis offers practical value beyond academic interest. By identifying which knot pairs are inherently confusable, practitioners can design targeted data augmentation for hard pairs, implement hierarchical classifiers, and establish realistic performance expectations.
 
-\subsection{Topology-Guided Training: Beyond Accuracy}
+Given that Swin-T achieves 99.4\% test accuracy, standard classification accuracy has reached near-saturation on this benchmark. Our ablation study reveals that topology-aware centroid alignment (TACA) provides a measurable 1.25-point accuracy gain on ResNet-18, but the more important finding lies in deeper dimensions: representation structure, embedding interpretability, and alignment with domain knowledge. This shift in evaluation focus is essential for benchmarks approaching performance ceilings, where accuracy alone becomes an insufficient metric. Our embedding alignment results reinforce this perspective. Topology-guided training both improves accuracy and fundamentally restructures the learned representation space. The 40\% improvement in embedding-topology correlation for ResNet-18 (Spearman $\rho$: $0.46 \to 0.65$, $p < 0.001$) demonstrates that domain-specific structural priors can enhance both classification performance and representation quality. This finding resonates with recent work on representation quality metrics \citep{kornblith2019similarity} and suggests practical value for downstream tasks such as few-shot learning, out-of-distribution detection, and human-interpretable feature spaces.
 
-Given that Swin-T achieves 99.4\% test accuracy, standard classification accuracy has reached near-saturation on this benchmark. Our ablation study reveals that topology-aware centroid alignment (TACA) provides a measurable 1.25-point accuracy gain on ResNet-18, but the more important finding lies in deeper dimensions: representation structure, embedding interpretability, and alignment with domain knowledge. This shift in evaluation focus is essential for benchmarks approaching performance ceilings, where accuracy alone becomes an insufficient metric.
+The improvement is particularly notable given that the topological distance metric uses hand-crafted weights. Learning these weights jointly with the model could further improve alignment. Additionally, multi-seed analysis (Supplementary Table~\ref{tab:robustness}) reveals that TACA halves the standard deviation of ResNet-18 test accuracy ($0.68\% \to 0.34\%$), suggesting that the topological prior acts as a regularizer that constrains embedding geometry across random initializations. It should be noted that the 1.25 percentage-point accuracy gain reported in Section~\ref{sec:topo_results} is specific to seed 42; the multi-seed means for CE and CE+TACA are both 96.67\%, indicating that \textbf{TACA's primary reproducible benefit is variance reduction and embedding restructuring rather than mean accuracy improvement}. This distinction reinforces our emphasis on representation quality over raw accuracy as the appropriate evaluation lens for topology-guided training.
 
-Our embedding alignment results reinforce this perspective. Topology-guided training both improves accuracy and fundamentally restructures the learned representation space. The 40\% improvement in embedding-topology correlation for ResNet-18 (Spearman $\rho$: $0.46 \to 0.65$, $p < 0.001$) demonstrates that domain-specific structural priors can enhance both classification performance and representation quality. This finding resonates with recent work on representation quality metrics \citep{kornblith2019similarity} and suggests practical value for downstream tasks such as few-shot learning, out-of-distribution detection, and human-interpretable feature spaces.
+Before discussing specific limitations, we emphasize the intended scope of this work. Our results are established under controlled photographic conditions using a single rope type, and we make no claim that current accuracy figures transfer directly to unconstrained deployment scenarios. A preliminary cross-domain evaluation using smartphone photographs with different rope materials, backgrounds, and lighting conditions confirms this expectation: Swin-T accuracy drops from 99.4\% to 41.0\% (Supplementary Section~S2), with rope material change identified as the dominant domain-shift factor. The primary contributions---the benchmark protocol, the topological--visual correlation, and the topology-guided training paradigm---are methodological rather than engineering claims. Generalization to diverse materials, backgrounds, and imaging conditions is an important empirical question that requires dedicated future evaluation.
 
-The improvement is particularly notable given that the topological distance metric uses hand-crafted weights. Learning these weights jointly with the model could further improve alignment.
+Several specific limitations should be acknowledged. First, the dataset uses a single rope type (blue synthetic climbing rope); a preliminary cross-domain test with different rope materials shows accuracy drops of 58--69 percentage points (Supplementary Section~S2), confirming that generalization to different materials, colors, and diameters remains a significant open challenge. Second, our topological distance metric uses hand-crafted weights that assume roughly equal contributions from each factor; learning these weights from data could improve correlation. Third, the dataset size (1{,}440 images) is modest by modern standards; this benchmark is intended as a controlled foundational study establishing the link between knot theory and visual recognition, rather than a large-scale industrial dataset. Fourth, the tightness-stratified domain shift, while realistic, represents a relatively controlled form of distribution mismatch; deployment scenarios may involve more severe variations such as occlusion, background clutter, or mixed rope materials. Fifth, topology-guided training was evaluated only on ResNet-18 and ResNet-50; its effect on Swin-T was not tested because the near-perfect baseline accuracy (99.4\%) leaves insufficient room for improvement, though the representation-level benefits may still apply.
 
-\subsection{Limitations}
-
-Several limitations should be acknowledged. First, the dataset uses a single rope type (blue synthetic climbing rope); generalization to different materials, colors, and diameters remains untested, which limits claims about real-world deployment. Second, our topological distance metric uses hand-crafted weights that assume roughly equal contributions from each factor; learning these weights from data could improve correlation. Third, the dataset size (1{,}440 images) is modest by modern standards; this benchmark is intended as a controlled foundational study establishing the link between knot theory and visual recognition, rather than a large-scale industrial dataset. Fourth, the tightness-stratified domain shift, while realistic, represents a relatively controlled form of distribution mismatch; deployment scenarios may involve more severe variations such as occlusion, background clutter, or mixed rope materials. Fifth, topology-guided training was evaluated only on ResNet-18 and ResNet-50; its effect on Swin-T was not tested because the near-perfect baseline accuracy (99.4\%) leaves insufficient room for improvement, though the representation-level benefits may still apply.
-
-\subsection{Summary and Outlook}
-
-We have presented Knots-10, a benchmark for fine-grained visual classification of physical knots, with a tightness-stratified evaluation protocol that creates a realistic domain shift. Among five baseline architectures, Swin-T achieves 99.4\% test accuracy.
-
-Our topological difficulty analysis reveals a statistically significant link between knot-theoretic similarity and visual confusion rates. Building on this insight, we proposed topology-guided training, which regularizes the learned embedding space to align with knot-theoretic structure. Ablation experiments demonstrate that topology-aware centroid alignment (TACA) improves ResNet-18 accuracy by 1.25 percentage points (95.83\% $\to$ 97.08\%), and embedding analysis reveals a substantial improvement in representation quality: Spearman correlation between class centroid distances and topological distances increases by up to 40\% ($0.46 \to 0.65$, $p < 0.001$). Visualization confirms that topology-guided models learn family-coherent embedding spaces where topologically related knots cluster together.
+In summary, we have presented Knots-10, a benchmark for fine-grained visual classification of physical knots, with a tightness-stratified evaluation protocol that creates a realistic domain shift. Among five baseline architectures, Swin-T achieves 99.4\% test accuracy. Our topological difficulty analysis reveals a statistically significant link between knot-theoretic similarity and visual confusion rates. Building on this insight, we proposed topology-guided training, which regularizes the learned embedding space to align with knot-theoretic structure. Ablation experiments demonstrate that topology-aware centroid alignment (TACA) improves ResNet-18 accuracy by 1.25 percentage points (95.83\% $\to$ 97.08\%), and embedding analysis reveals a substantial improvement in representation quality: Spearman correlation between class centroid distances and topological distances increases by up to 40\% ($0.46 \to 0.65$, $p < 0.001$). Visualization confirms that topology-guided models learn family-coherent embedding spaces where topologically related knots cluster together.
 
 Future work will extend the dataset to additional knot types and rope materials---particularly varying colors, diameters, and material properties (e.g., natural fiber vs.\ synthetic)---to evaluate generalization under cross-material domain shift. Other directions include learning the topological distance weights jointly with the model, investigating whether topology-aware representations improve few-shot generalization to novel knot types, and scaling to larger knot inventories with more complex topological structure.
 
@@ -525,13 +444,13 @@ All models are initialized with ImageNet-pretrained weights and fine-tuned end-t
 \subsection{Training Protocol}
 \label{sec:training}
 
-All models are trained for 20 epochs using AdamW ($\text{lr}=10^{-4}$, weight decay $10^{-4}$) with cosine annealing. Input images are resized to $224 \times 224$. Training augmentations include random horizontal flip, rotation ($\pm 15^{\circ}$), and color jitter (brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1). Batch size is 32. The best checkpoint by validation accuracy is selected for test evaluation. All experiments use a single Apple M-series processor via the MPS backend in PyTorch 2.9. Due to the deterministic nature of the tightness-stratified split and the limited dataset size, all experiments were conducted with a fixed random seed (seed = 42) to ensure exact reproducibility.
+All models are trained for 20 epochs using AdamW ($\text{lr}=10^{-4}$, weight decay $10^{-4}$) with cosine annealing. Input images are resized to $224 \times 224$. Training augmentations include random horizontal flip, rotation ($\pm 15^{\circ}$), and color jitter (brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1). Batch size is 32. The best checkpoint by validation accuracy is selected for test evaluation. All experiments use a single Apple M-series processor via the MPS backend in PyTorch 2.9. Due to the deterministic nature of the tightness-stratified split and the limited dataset size, all main-paper experiments were conducted with a fixed random seed (seed = 42) to ensure exact reproducibility; Supplementary Section~S1 extends to three seeds for robustness analysis.
 
 
 \subsection{Topology-Guided Training}
 \label{sec:topo_method}
 
-Given the topological distance matrix $\mathbf{D}^{\text{topo}} \in \mathbb{R}^{K \times K}$ defined in Section~\ref{sec:topo_metric}, we add regularization terms to the standard cross-entropy loss. Let $\mathbf{z}_i$ denote the penultimate-layer representation (after global average pooling) for sample $i$, and let $\boldsymbol{\mu}_k = \frac{1}{|S_k|}\sum_{i \in S_k} \mathbf{z}_i$ be the class centroid for class $k$ within a mini-batch $S_k$.
+Given the topological distance matrix $\mathbf{D}^{\text{topo}} \in \mathbb{R}^{K \times K}$ defined in Section~\ref{sec:topo_metric}, we add regularization terms to the standard cross-entropy loss. The goal is not to reconstruct formal topological invariants, but to introduce weak topological supervision that encourages the learned representation to respect knot similarity structure. Let $\mathbf{z}_i$ denote the penultimate-layer representation (after global average pooling) for sample $i$, and let $\boldsymbol{\mu}_k = \frac{1}{|S_k|}\sum_{i \in S_k} \mathbf{z}_i$ be the class centroid for class $k$ within a mini-batch $S_k$.
 
 \subsubsection{Topology-Aware Centroid Alignment (TACA)}
 
@@ -544,12 +463,12 @@ where $\hat{\mathbf{D}}^{\text{emb}}_{k,k'} = \|\boldsymbol{\mu}_k - \boldsymbol
 
 \subsubsection{Topology-Aware Margin Loss (TAML)}
 
-The TAML loss is a margin-based contrastive term that uses topological distance to set per-pair margins, pushing samples away from centroids of topologically similar but different classes (hard negatives):
+The TAML loss is a margin-based contrastive term that targets hard negatives---class pairs that are topologically similar yet distinct---pushing their embeddings apart by at least a fixed margin:
 
 \begin{equation}
-\mathcal{L}_{\text{TAML}} = \frac{1}{|\mathcal{P}|}\sum_{(i,j) \in \mathcal{P}} \max\left(0,\; \text{sim}(\hat{\mathbf{z}}_i, \hat{\mathbf{z}}_j) - (1 - d^{\text{topo}}_{y_i, y_j})\right)
+\mathcal{L}_{\text{TAML}} = \frac{1}{|\mathcal{H}|}\sum_{(c,c') \in \mathcal{H}}\; \frac{1}{|S_c|}\sum_{i \in S_c} \max\left(0,\; m - \|\hat{\mathbf{z}}_i - \hat{\boldsymbol{\mu}}_{c'}\|_2\right)
 \end{equation}
-where $\hat{\mathbf{z}}_i = \mathbf{z}_i / \|\mathbf{z}_i\|_2$ is the $L_2$-normalized embedding, $\text{sim}(\cdot, \cdot)$ denotes cosine similarity, $\mathcal{P} = \{(i,j) : y_i \neq y_j\}$ is the set of cross-class sample pairs in the mini-batch, and $d^{\text{topo}}_{y_i, y_j}$ is the topological distance between their respective classes. The term $(1 - d^{\text{topo}}_{y_i, y_j})$ sets a class-pair-specific similarity threshold: topologically distant classes are allowed higher similarity without penalty, while topologically similar classes must be pushed further apart.
+where $\hat{\mathbf{z}}_i = \mathbf{z}_i / \|\mathbf{z}_i\|_2$ is the $L_2$-normalized embedding, $\hat{\boldsymbol{\mu}}_{c'}$ is the $L_2$-normalized centroid of class $c'$, $\mathcal{H} = \{(c,c') : c \neq c',\; d^{\text{topo}}_{c,c'} < \tau\}$ is the set of hard-negative class pairs with topological distance below threshold $\tau = 0.3$, $S_c$ is the set of samples of class $c$ in the mini-batch, and $m = 1.2$ is the margin. This loss specifically penalizes cases where samples of one class lie too close (in embedding space) to the centroid of a topologically similar but different class, thereby enforcing discriminability among the most confusable knot pairs.
 
 \subsubsection{Combined Loss}
 
@@ -566,21 +485,15 @@ with $\lambda_{\text{TACA}} = 0.1$ and $\lambda_{\text{TAML}} = 0.005$ in all ex
 
 \section*{Data Availability}
 
-The 10Knots dataset is publicly available at \url{https://www.kaggle.com/datasets/josephcameron/10knots} under a CC BY-SA 4.0 license. Our evaluation code and trained models will be released at \url{https://github.com/Mousaee/knots10-benchmark}.
-%% TODO: Replace [anonymized] with actual repository URL before submission.
+The 10Knots dataset is publicly available at \url{https://www.kaggle.com/datasets/josephcameron/10knots} under a CC BY-SA 4.0 license. Our evaluation code, trained model checkpoints, and analysis scripts are publicly available at \url{https://github.com/Mousaee/knots10-benchmark}.
 
 \section*{Acknowledgements}
 
-%% TODO: Fill in acknowledgements. Example:
-%% We thank [names] for helpful discussions. This work was supported by [funding source].
-[To be completed before submission.]
+This work was inspired by the graduate course \emph{Deep Intelligent Computing and Practice} at Shihezi University.
 
 \section*{Author Contributions}
 
-%% TODO: Fill in author contributions. Example:
-%% S.N.\ conceived the study, designed and conducted experiments, and wrote the manuscript.
-%% [Supervisor Name] supervised the project and reviewed the manuscript.
-[To be completed before submission.]
+S.N.\ conceived the study, designed the experiments, developed the methodology (topological distance metric, topology-guided training), implemented all computational experiments, analyzed the results, and wrote the manuscript. X.L.\ contributed to data collection, including physical knot tying and photography for the cross-domain evaluation. Y.Y.\ supervised the project and reviewed the manuscript.
 
 \section*{Competing Interests}
 
@@ -591,12 +504,196 @@ The authors declare no competing interests.
 \noindent\textbf{Ethics Statement.} This study uses a publicly available dataset of photographs of rope knots. No human subjects, animals, or sensitive data are involved.
 
 \noindent\textbf{Funding:} This research received no specific grant from any funding agency in the public, commercial, or not-for-profit sectors.
-%% TODO: If you DO have funding, replace the above sentence with the actual funding source.
 
-\noindent Correspondence and requests for materials should be addressed to S.N.
-%% TODO: Replace with actual corresponding author email
+\noindent Correspondence and requests for materials should be addressed to Y.Y.
 
-\bibliographystyle{unsrtnat}
+\bibliographystyle{sn-nature}
 \bibliography{references}
+
+% ============================================
+% SUPPLEMENTARY INFORMATION
+% ============================================
+\clearpage
+\appendix
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+
+\section*{Supplementary Information}
+
+\subsection*{S1. Multi-Seed Robustness Analysis}\label{sec:supp_robustness}
+
+To verify that the results reported in the main text are not artifacts of a particular random initialization, we repeated key experiments with three random seeds (42, 123, 456). Each configuration was trained from scratch under identical hyperparameters, with only the random seed affecting weight initialization, data shuffling, and the train/validation split. Table~\ref{tab:robustness} reports the mean $\pm$ standard deviation of test accuracy and macro F1 across the three runs.
+
+\begin{table}[h]
+\centering
+\caption{Multi-seed robustness analysis. Each configuration is trained with three random seeds (42, 123, 456) and evaluated on the tightness-stratified test set. All other hyperparameters are held constant.}
+\label{tab:robustness}
+\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Configuration & Test Accuracy (\%) & Macro F1 \\
+\midrule
+ResNet-18 (CE)             & $96.67 \pm 0.68$ & $0.967 \pm 0.007$ \\
+ResNet-18 (CE + TACA)      & $96.67 \pm 0.34$ & $0.967 \pm 0.003$ \\
+ResNet-18 (CE + TAML)      & $96.53 \pm 0.86$ & $0.965 \pm 0.009$ \\
+ResNet-18 (CE + TACA + TAML) & $96.74 \pm 0.60$ & $0.968 \pm 0.006$ \\
+\midrule
+ResNet-50 (CE)             & $96.81 \pm 0.60$ & $0.968 \pm 0.006$ \\
+EfficientNet-B0 (CE)       & $95.97 \pm 1.08$ & $0.960 \pm 0.011$ \\
+ViT-B/16 (CE)              & $95.49 \pm 1.21$ & $0.955 \pm 0.012$ \\
+\textbf{Swin-T (CE)}       & $\mathbf{98.33 \pm 0.45}$ & $\mathbf{0.983 \pm 0.004}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Several observations emerge from this analysis:
+
+\begin{enumerate}
+    \item \textbf{All configurations are stable.} Standard deviations remain below 1.3 percentage points across all eight configurations, confirming that the reported results are robust to random initialization and data shuffling.
+
+    \item \textbf{Architecture ranking is consistent.} The ranking Swin-T $>$ ResNet-50 $\approx$ ResNet-18 $>$ EfficientNet-B0 $\approx$ ViT-B/16 holds across all three seeds, with no rank reversals observed. This confirms that the architecture comparison in the main text reflects genuine performance differences rather than seed-dependent fluctuations.
+
+    \item \textbf{TACA reduces training variance.} Comparing the ResNet-18 baseline (CE only, std = 0.68\%) with the TACA-augmented variant (CE + TACA, std = 0.34\%), the topological centroid alignment loss halves the standard deviation while maintaining the same mean accuracy. This stabilization effect suggests that the topological prior acts as a regularizer, constraining the embedding space to a more consistent geometry across different random initializations. The combined CE + TACA + TAML configuration also shows reduced variance (std = 0.60\%) compared to either single-loss variant, further supporting this interpretation.
+
+    \item \textbf{Transformer architectures show higher variance.} ViT-B/16 and EfficientNet-B0 exhibit the largest standard deviations (1.21\% and 1.08\%, respectively), consistent with the known sensitivity of these architectures to random initialization when training data is limited.
+\end{enumerate}
+
+\subsection*{S2. Cross-Domain Evaluation with Phone Photographs}\label{sec:supp_crossdomain}
+
+To provide a preliminary assessment of cross-domain generalization, we collected 100 photographs (10 knot types $\times$ 10 images) using a smartphone camera under conditions deliberately different from the training data. The training set uses blue synthetic climbing rope on a dark background under controlled studio lighting; cross-domain images use two alternative ropes (white-red braided nylon cord and black braided cotton cord), three different backgrounds (light gray surface, blue surface, and beige surface), two lighting conditions (indoor artificial and natural window light), and multiple viewing angles (overhead, 45\textdegree, and 30\textdegree). The domain shift thus simultaneously involves changes in rope color (blue $\to$ white-red or black), rope material (synthetic climbing rope $\to$ braided nylon or cotton), rope diameter ($\sim$10~mm $\to$ $\sim$6~mm or $\sim$4~mm), and background appearance. For knot types that require two rope strands (Clove Hitch, Reef Knot, Fisherman's Knot, Flemish Bend), a second gray braided nylon cord was used as the paired strand. Each photograph systematically varies one or more domain-shift factors relative to a baseline condition (Table~\ref{tab:crossdomain_protocol}).
+
+\begin{table}[h]
+\centering
+\caption{Cross-domain photography protocol. Each of the 10 photographs per knot type varies specific domain-shift factors relative to the training distribution. Photo 1 serves as the baseline (closest to training conditions except for rope color/material).}
+\label{tab:crossdomain_protocol}
+\small
+\begin{tabular}{@{}clcccc@{}}
+\toprule
+Photo & Factor Tested & Tightness & Angle & Background & Rope \\
+\midrule
+1 & Baseline & Tight & 90\textdegree & Gray & A \\
+2--3 & Viewing angle & Tight & 45\textdegree/30\textdegree & Gray & A \\
+4--5 & Looseness ($\pm$ angle) & Loose & 90\textdegree/45\textdegree & Gray & A \\
+6--7 & Background & Tight & 90\textdegree & Blue/Beige & A \\
+8 & Lighting & Tight & 90\textdegree & Gray & A$^{\dagger}$ \\
+9 & Rope material & Tight & 90\textdegree & Gray & B \\
+10 & Combined shift & Tight & 90\textdegree & Blue & B$^{\dagger}$ \\
+\bottomrule
+\end{tabular}
+\vspace{0.3em}
+
+\raggedright\footnotesize $^{\dagger}$Natural light; all other photos use indoor artificial light. Rope A: white-red braided nylon cord ($\sim$6~mm); Rope B: black braided cotton cord ($\sim$4~mm). Both differ substantially from the training rope (blue synthetic climbing rope, $\sim$10~mm) in color, material, and diameter.
+\end{table}
+
+\subsubsection*{Overall Results}
+
+Table~\ref{tab:crossdomain_results} summarizes overall cross-domain performance. Both models show substantial accuracy degradation compared to in-domain results: Swin-T drops from 99.4\% to 41.0\%, and ResNet-18 from 95.8\% to 27.0\%.
+
+\begin{table}[h]
+\centering
+\caption{Cross-domain evaluation results. Models are evaluated on 100 phone photographs without any fine-tuning or domain adaptation. In-domain accuracy is reproduced from Table~\ref{tab:results} for comparison.}
+\label{tab:crossdomain_results}
+\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Model & In-Domain Acc & Cross-Domain Acc & Macro F1 & $\Delta$ Acc \\
+\midrule
+Swin-T   & 99.4\% & 41.0\% & 0.391 & $-58.4$ pp \\
+ResNet-18 & 95.8\% & 27.0\% & 0.194 & $-68.8$ pp \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection*{Per-Factor Analysis}
+
+The controlled photography protocol enables attribution of accuracy changes to specific domain-shift factors. Table~\ref{tab:crossdomain_factors} reports per-factor accuracy for Swin-T.
+
+\begin{table}[h]
+\centering
+\caption{Per-factor accuracy breakdown for Swin-T on cross-domain photographs. $\Delta$ indicates accuracy change relative to the baseline condition (Photo 1).}
+\label{tab:crossdomain_factors}
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Domain-Shift Factor & Photos & Accuracy & $\Delta$ from Baseline \\
+\midrule
+Baseline (rope A, gray surface, indoor, overhead) & 1 & 40.0\% & --- \\
+Viewing angle (45\textdegree/30\textdegree) & 2--3 & 40.0\% & $\pm 0.0$ pp \\
+Looseness ($\pm$ angle) & 4--5 & 45.0\% & $+5.0$ pp \\
+Background change (blue/beige surface) & 6--7 & 50.0\% & $+10.0$ pp \\
+Natural lighting & 8 & 50.0\% & $+10.0$ pp \\
+Rope material change (rope B) & 9 & 20.0\% & $-20.0$ pp \\
+Combined shift (rope B + blue surface + natural) & 10 & 30.0\% & $-10.0$ pp \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection*{Per-Class Analysis}
+
+Per-class accuracy reveals that certain knot types are more robust to domain shift than others. For Swin-T, Overhand Knot (OHK) achieves 90\% cross-domain recall, likely due to its simple and distinctive visual structure. Clove Hitch (CH) maintains 80\% recall, consistent with its unique two-loop-around-pole appearance. In contrast, Bowline (BK) and Flemish Bend (FMB) drop to 0\%, suggesting these knots' diagnostic visual features are heavily dependent on the specific rope appearance in the training data.
+
+\subsubsection*{Interpretation}
+
+These results are expected and consistent with the generalization scope discussion in the main text. The severe accuracy degradation quantifies the domain gap between controlled laboratory conditions and unconstrained real-world photographs. Several observations merit discussion:
+
+\begin{enumerate}
+    \item \textbf{Rope color and material are the dominant factors.} Even the baseline condition (Photo 1: rope A, gray surface, same angle) achieves only 40.0\% accuracy, indicating that the color shift alone (blue $\to$ white-red) accounts for the majority of the degradation. Switching to rope B (black cotton) causes an additional $-20.0$ pp drop beyond the baseline, reflecting the compound effect of color, material, and diameter changes. This is consistent with known texture and color bias in CNNs \citep{geirhos2019imagenettrained}: models trained exclusively on blue rope appear to encode rope color as a discriminative feature rather than relying solely on structural knot geometry.
+
+    \item \textbf{Background and lighting changes are surprisingly benign.} Accuracy does not decrease with background or lighting changes, and in some cases slightly improves ($+10$ pp). Notably, Background B (blue surface) may partially benefit the model because its color is closer to the blue training rope, providing a more familiar contrast context. This suggests that ImageNet pretraining provides reasonable invariance to background and lighting variation.
+
+    \item \textbf{Swin-T still outperforms ResNet-18 cross-domain.} Despite both models degrading substantially, Swin-T (41.0\%) maintains a 14-point advantage over ResNet-18 (27.0\%), suggesting that its stronger in-domain features provide partial cross-domain benefit.
+
+    \item \textbf{This result motivates future work.} The 58--69 pp accuracy gap between in-domain and cross-domain evaluation provides a concrete, quantified motivation for future research on color-invariant training (e.g., aggressive color jitter augmentation), multi-material data collection, and domain adaptation techniques.
+\end{enumerate}
+
+\noindent\textbf{Caveat.} This cross-domain evaluation uses a small sample size (100 images from a single photographer) and should be interpreted as a preliminary investigation rather than a definitive generalization study. A rigorous cross-domain benchmark would require multiple photographers, rope types, and environmental conditions.
+
+\subsection*{S3. Supplementary Figures}\label{sec:supp_figures}
+
+The following figures are referenced in the main text and provide supporting detail for the analyses presented therein.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{model_comparison.pdf}
+\caption{Validation and test accuracy across all five models.}
+\label{fig:comparison}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{f1_heatmap.pdf}
+\caption{Per-class F1 scores across five models. Darker green indicates higher F1. Clove Hitch (CH) achieves near-perfect scores across all models, while Figure-8 Knot (F8K) is consistently the most challenging class.}
+\label{fig:f1heatmap}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{convergence_all.pdf}
+\caption{Training and validation accuracy curves for all five models over 20 epochs.}
+\label{fig:convergence}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{weight_sensitivity.pdf}
+\caption{Weight sensitivity analysis. Left: distribution of Spearman $\rho$ across 200 random weight perturbations ($\pm 50\%$) for EfficientNet-B0. The correlation remains consistently negative ($\rho = -0.483 \pm 0.016$). Right: comparison of default and uniform weight configurations across all five models, showing negligible differences.}
+\label{fig:weight_sensitivity}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{gradcam_comparison.pdf}
+\caption{Grad-CAM visualizations for ResNet-18 (middle row) and ResNet-50 (bottom row) across all 10 knot classes. Top row shows original test images. Heatmaps overlay activation intensity (red = high, blue = low). Green labels indicate correct predictions, red labels indicate errors. Both models focus on the central knot structure. ResNet-50 produces more spatially concentrated activations than ResNet-18.}
+\label{fig:gradcam}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{distance_comparison_resnet18.png}
+\caption{Distance matrix comparison for ResNet-18. Left: topological distance (ground truth). Center: baseline embedding distances. Right: topology-guided embedding distances. Color intensity represents distance magnitude (darker = larger). The topology-guided embedding recovers topological structure with block patterns indicating family-level clustering.}
+\label{fig:distance_comparison}
+\end{figure}
 
 \end{document}

@@ -1,0 +1,2575 @@
+{
+  "model": "swin_t",
+  "checkpoint": "checkpoints/swin_t_best.pth",
+  "photo_dir": "phone_photos",
+  "n_photos": 100,
+  "accuracy": 0.41,
+  "macro_f1": 0.39073301203624233,
+  "report": {
+    "ABK": {
+      "precision": 0.6666666666666666,
+      "recall": 0.4,
+      "f1-score": 0.5,
+      "support": 10.0
+    },
+    "BK": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 10.0
+    },
+    "CH": {
+      "precision": 1.0,
+      "recall": 0.8,
+      "f1-score": 0.8888888888888888,
+      "support": 10.0
+    },
+    "F8K": {
+      "precision": 0.2222222222222222,
+      "recall": 0.2,
+      "f1-score": 0.21052631578947367,
+      "support": 10.0
+    },
+    "F8L": {
+      "precision": 0.6,
+      "recall": 0.3,
+      "f1-score": 0.4,
+      "support": 10.0
+    },
+    "FSK": {
+      "precision": 0.7142857142857143,
+      "recall": 0.5,
+      "f1-score": 0.5882352941176471,
+      "support": 10.0
+    },
+    "FMB": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 10.0
+    },
+    "OHK": {
+      "precision": 0.20930232558139536,
+      "recall": 0.9,
+      "f1-score": 0.33962264150943394,
+      "support": 10.0
+    },
+    "RK": {
+      "precision": 1.0,
+      "recall": 0.3,
+      "f1-score": 0.46153846153846156,
+      "support": 10.0
+    },
+    "SK": {
+      "precision": 0.4117647058823529,
+      "recall": 0.7,
+      "f1-score": 0.5185185185185185,
+      "support": 10.0
+    },
+    "accuracy": 0.41,
+    "macro avg": {
+      "precision": 0.48242416346383515,
+      "recall": 0.41,
+      "f1-score": 0.39073301203624233,
+      "support": 100.0
+    },
+    "weighted avg": {
+      "precision": 0.48242416346383515,
+      "recall": 0.41,
+      "f1-score": 0.39073301203624233,
+      "support": 100.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      4,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      4,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      8,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      8,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      8,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      3,
+      0,
+      0,
+      1,
+      0,
+      5
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      5,
+      0,
+      3,
+      0,
+      2
+    ],
+    [
+      0,
+      0,
+      0,
+      3,
+      2,
+      2,
+      0,
+      3,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      9,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      3,
+      3,
+      2
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3,
+      0,
+      7
+    ]
+  ],
+  "factor_analysis": {
+    "baseline": {
+      "accuracy": 0.4,
+      "n_photos": 10,
+      "n_correct": 4,
+      "photo_nums": [
+        1
+      ],
+      "description": "Tight, overhead, white paper, indoor, rope A"
+    },
+    "angle": {
+      "accuracy": 0.4,
+      "n_photos": 20,
+      "n_correct": 8,
+      "photo_nums": [
+        2,
+        3
+      ],
+      "description": "Tight, 30-45\u00b0 angle, white paper, indoor, rope A"
+    },
+    "looseness": {
+      "accuracy": 0.45,
+      "n_photos": 20,
+      "n_correct": 9,
+      "photo_nums": [
+        4,
+        5
+      ],
+      "description": "Loose knot, white paper, indoor, rope A"
+    },
+    "background": {
+      "accuracy": 0.5,
+      "n_photos": 20,
+      "n_correct": 10,
+      "photo_nums": [
+        6,
+        7
+      ],
+      "description": "Tight, overhead, wood/cloth bg, indoor, rope A"
+    },
+    "lighting": {
+      "accuracy": 0.5,
+      "n_photos": 10,
+      "n_correct": 5,
+      "photo_nums": [
+        8
+      ],
+      "description": "Tight, overhead, white paper, natural light, rope A"
+    },
+    "rope_material": {
+      "accuracy": 0.2,
+      "n_photos": 10,
+      "n_correct": 2,
+      "photo_nums": [
+        9
+      ],
+      "description": "Tight, overhead, white paper, indoor, rope B"
+    },
+    "combined_shift": {
+      "accuracy": 0.3,
+      "n_photos": 10,
+      "n_correct": 3,
+      "photo_nums": [
+        10
+      ],
+      "description": "Tight, overhead, wood bg, natural light, rope B"
+    }
+  },
+  "details": [
+    {
+      "file": "1.jpg",
+      "true": "ABK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.42901045083999634,
+      "photo_num": 1,
+      "factor": "baseline",
+      "top3": [
+        [
+          "OHK",
+          0.42901045083999634
+        ],
+        [
+          "ABK",
+          0.3055313527584076
+        ],
+        [
+          "SK",
+          0.21675774455070496
+        ]
+      ]
+    },
+    {
+      "file": "10.jpg",
+      "true": "ABK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.6552065014839172,
+      "photo_num": 10,
+      "factor": "combined_shift",
+      "top3": [
+        [
+          "OHK",
+          0.6552065014839172
+        ],
+        [
+          "SK",
+          0.24091015756130219
+        ],
+        [
+          "BK",
+          0.08372768759727478
+        ]
+      ]
+    },
+    {
+      "file": "2.jpg",
+      "true": "ABK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.8504347801208496,
+      "photo_num": 2,
+      "factor": "angle",
+      "top3": [
+        [
+          "OHK",
+          0.8504347801208496
+        ],
+        [
+          "SK",
+          0.07801330834627151
+        ],
+        [
+          "ABK",
+          0.05444109067320824
+        ]
+      ]
+    },
+    {
+      "file": "3.jpg",
+      "true": "ABK",
+      "pred": "ABK",
+      "correct": true,
+      "confidence": 0.43759194016456604,
+      "photo_num": 3,
+      "factor": "angle",
+      "top3": [
+        [
+          "ABK",
+          0.43759194016456604
+        ],
+        [
+          "SK",
+          0.2615199685096741
+        ],
+        [
+          "OHK",
+          0.2509067952632904
+        ]
+      ]
+    },
+    {
+      "file": "4.jpg",
+      "true": "ABK",
+      "pred": "BK",
+      "correct": false,
+      "confidence": 0.6284558773040771,
+      "photo_num": 4,
+      "factor": "looseness",
+      "top3": [
+        [
+          "BK",
+          0.6284558773040771
+        ],
+        [
+          "ABK",
+          0.36428192257881165
+        ],
+        [
+          "SK",
+          0.004765328951179981
+        ]
+      ]
+    },
+    {
+      "file": "5.jpg",
+      "true": "ABK",
+      "pred": "ABK",
+      "correct": true,
+      "confidence": 0.8951628804206848,
+      "photo_num": 5,
+      "factor": "looseness+angle",
+      "top3": [
+        [
+          "ABK",
+          0.8951628804206848
+        ],
+        [
+          "OHK",
+          0.05025818571448326
+        ],
+        [
+          "BK",
+          0.029053926467895508
+        ]
+      ]
+    },
+    {
+      "file": "6.jpg",
+      "true": "ABK",
+      "pred": "ABK",
+      "correct": true,
+      "confidence": 0.9319415092468262,
+      "photo_num": 6,
+      "factor": "background",
+      "top3": [
+        [
+          "ABK",
+          0.9319415092468262
+        ],
+        [
+          "SK",
+          0.03592386841773987
+        ],
+        [
+          "CH",
+          0.02064409665763378
+        ]
+      ]
+    },
+    {
+      "file": "7.jpg",
+      "true": "ABK",
+      "pred": "ABK",
+      "correct": true,
+      "confidence": 0.5908498167991638,
+      "photo_num": 7,
+      "factor": "background",
+      "top3": [
+        [
+          "ABK",
+          0.5908498167991638
+        ],
+        [
+          "SK",
+          0.2799687087535858
+        ],
+        [
+          "BK",
+          0.052659209817647934
+        ]
+      ]
+    },
+    {
+      "file": "8.jpg",
+      "true": "ABK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.450563907623291,
+      "photo_num": 8,
+      "factor": "lighting",
+      "top3": [
+        [
+          "OHK",
+          0.450563907623291
+        ],
+        [
+          "ABK",
+          0.41353029012680054
+        ],
+        [
+          "CH",
+          0.09271732717752457
+        ]
+      ]
+    },
+    {
+      "file": "9.jpg",
+      "true": "ABK",
+      "pred": "BK",
+      "correct": false,
+      "confidence": 0.7447749972343445,
+      "photo_num": 9,
+      "factor": "rope_material",
+      "top3": [
+        [
+          "BK",
+          0.7447749972343445
+        ],
+        [
+          "SK",
+          0.1489717662334442
+        ],
+        [
+          "OHK",
+          0.08644479513168335
+        ]
+      ]
+    },
+    {
+      "file": "1.jpg",
+      "true": "BK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.8200477361679077,
+      "photo_num": 1,
+      "factor": "baseline",
+      "top3": [
+        [
+          "OHK",
+          0.8200477361679077
+        ],
+        [
+          "F8K",
+          0.1595926731824875
+        ],
+        [
+          "SK",
+          0.015600647777318954
+        ]
+      ]
+    },
+    {
+      "file": "10.jpg",
+      "true": "BK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.6590642929077148,
+      "photo_num": 10,
+      "factor": "combined_shift",
+      "top3": [
+        [
+          "OHK",
+          0.6590642929077148
+        ],
+        [
+          "BK",
+          0.3279780149459839
+        ],
+        [
+          "SK",
+          0.009128972887992859
+        ]
+      ]
+    },
+    {
+      "file": "2.jpg",
+      "true": "BK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.9977340698242188,
+      "photo_num": 2,
+      "factor": "angle",
+      "top3": [
+        [
+          "OHK",
+          0.9977340698242188
+        ],
+        [
+          "F8K",
+          0.0016681808046996593
+        ],
+        [
+          "ABK",
+          0.00029737220029346645
+        ]
+      ]
+    },
+    {
+      "file": "3.jpg",
+      "true": "BK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.9951205849647522,
+      "photo_num": 3,
+      "factor": "angle",
+      "top3": [
+        [
+          "OHK",
+          0.9951205849647522
+        ],
+        [
+          "F8K",
+          0.003680812194943428
+        ],
+        [
+          "ABK",
+          0.0005579224671237171
+        ]
+      ]
+    },
+    {
+      "file": "4.jpg",
+      "true": "BK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.9239600896835327,
+      "photo_num": 4,
+      "factor": "looseness",
+      "top3": [
+        [
+          "OHK",
+          0.9239600896835327
+        ],
+        [
+          "F8K",
+          0.03062083199620247
+        ],
+        [
+          "SK",
+          0.018273163586854935
+        ]
+      ]
+    },
+    {
+      "file": "5.jpg",
+      "true": "BK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.5749356746673584,
+      "photo_num": 5,
+      "factor": "looseness+angle",
+      "top3": [
+        [
+          "OHK",
+          0.5749356746673584
+        ],
+        [
+          "ABK",
+          0.23490484058856964
+        ],
+        [
+          "F8K",
+          0.0833740085363388
+        ]
+      ]
+    },
+    {
+      "file": "6.jpg",
+      "true": "BK",
+      "pred": "F8K",
+      "correct": false,
+      "confidence": 0.6677815914154053,
+      "photo_num": 6,
+      "factor": "background",
+      "top3": [
+        [
+          "F8K",
+          0.6677815914154053
+        ],
+        [
+          "SK",
+          0.15432649850845337
+        ],
+        [
+          "OHK",
+          0.14006122946739197
+        ]
+      ]
+    },
+    {
+      "file": "7.jpg",
+      "true": "BK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.8495848774909973,
+      "photo_num": 7,
+      "factor": "background",
+      "top3": [
+        [
+          "OHK",
+          0.8495848774909973
+        ],
+        [
+          "F8K",
+          0.07514403760433197
+        ],
+        [
+          "BK",
+          0.03139230236411095
+        ]
+      ]
+    },
+    {
+      "file": "8.jpg",
+      "true": "BK",
+      "pred": "SK",
+      "correct": false,
+      "confidence": 0.5682344436645508,
+      "photo_num": 8,
+      "factor": "lighting",
+      "top3": [
+        [
+          "SK",
+          0.5682344436645508
+        ],
+        [
+          "OHK",
+          0.33559727668762207
+        ],
+        [
+          "F8K",
+          0.07720699906349182
+        ]
+      ]
+    },
+    {
+      "file": "9.jpg",
+      "true": "BK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.9798486828804016,
+      "photo_num": 9,
+      "factor": "rope_material",
+      "top3": [
+        [
+          "OHK",
+          0.9798486828804016
+        ],
+        [
+          "BK",
+          0.01124102808535099
+        ],
+        [
+          "SK",
+          0.006958193611353636
+        ]
+      ]
+    },
+    {
+      "file": "1.jpg",
+      "true": "CH",
+      "pred": "CH",
+      "correct": true,
+      "confidence": 0.8444791436195374,
+      "photo_num": 1,
+      "factor": "baseline",
+      "top3": [
+        [
+          "CH",
+          0.8444791436195374
+        ],
+        [
+          "OHK",
+          0.09433449804782867
+        ],
+        [
+          "ABK",
+          0.036395784467458725
+        ]
+      ]
+    },
+    {
+      "file": "10.jpg",
+      "true": "CH",
+      "pred": "CH",
+      "correct": true,
+      "confidence": 0.9662259817123413,
+      "photo_num": 10,
+      "factor": "combined_shift",
+      "top3": [
+        [
+          "CH",
+          0.9662259817123413
+        ],
+        [
+          "OHK",
+          0.019333522766828537
+        ],
+        [
+          "F8K",
+          0.01224367693066597
+        ]
+      ]
+    },
+    {
+      "file": "2.jpg",
+      "true": "CH",
+      "pred": "CH",
+      "correct": true,
+      "confidence": 0.8173316121101379,
+      "photo_num": 2,
+      "factor": "angle",
+      "top3": [
+        [
+          "CH",
+          0.8173316121101379
+        ],
+        [
+          "OHK",
+          0.12372568994760513
+        ],
+        [
+          "ABK",
+          0.04952962324023247
+        ]
+      ]
+    },
+    {
+      "file": "3.jpg",
+      "true": "CH",
+      "pred": "CH",
+      "correct": true,
+      "confidence": 0.9472363591194153,
+      "photo_num": 3,
+      "factor": "angle",
+      "top3": [
+        [
+          "CH",
+          0.9472363591194153
+        ],
+        [
+          "ABK",
+          0.040547553449869156
+        ],
+        [
+          "F8K",
+          0.005359211470931768
+        ]
+      ]
+    },
+    {
+      "file": "4.jpg",
+      "true": "CH",
+      "pred": "CH",
+      "correct": true,
+      "confidence": 0.9094991683959961,
+      "photo_num": 4,
+      "factor": "looseness",
+      "top3": [
+        [
+          "CH",
+          0.9094991683959961
+        ],
+        [
+          "ABK",
+          0.06400538980960846
+        ],
+        [
+          "OHK",
+          0.013247106224298477
+        ]
+      ]
+    },
+    {
+      "file": "5.jpg",
+      "true": "CH",
+      "pred": "ABK",
+      "correct": false,
+      "confidence": 0.5939090251922607,
+      "photo_num": 5,
+      "factor": "looseness+angle",
+      "top3": [
+        [
+          "ABK",
+          0.5939090251922607
+        ],
+        [
+          "CH",
+          0.36415424942970276
+        ],
+        [
+          "OHK",
+          0.023796483874320984
+        ]
+      ]
+    },
+    {
+      "file": "6.jpg",
+      "true": "CH",
+      "pred": "CH",
+      "correct": true,
+      "confidence": 0.9784155488014221,
+      "photo_num": 6,
+      "factor": "background",
+      "top3": [
+        [
+          "CH",
+          0.9784155488014221
+        ],
+        [
+          "ABK",
+          0.008583076298236847
+        ],
+        [
+          "OHK",
+          0.005790152121335268
+        ]
+      ]
+    },
+    {
+      "file": "7.jpg",
+      "true": "CH",
+      "pred": "CH",
+      "correct": true,
+      "confidence": 0.5097853541374207,
+      "photo_num": 7,
+      "factor": "background",
+      "top3": [
+        [
+          "CH",
+          0.5097853541374207
+        ],
+        [
+          "OHK",
+          0.4290209710597992
+        ],
+        [
+          "ABK",
+          0.02511226385831833
+        ]
+      ]
+    },
+    {
+      "file": "8.jpg",
+      "true": "CH",
+      "pred": "CH",
+      "correct": true,
+      "confidence": 0.9895629286766052,
+      "photo_num": 8,
+      "factor": "lighting",
+      "top3": [
+        [
+          "CH",
+          0.9895629286766052
+        ],
+        [
+          "ABK",
+          0.004860001616179943
+        ],
+        [
+          "OHK",
+          0.003876723349094391
+        ]
+      ]
+    },
+    {
+      "file": "9.jpg",
+      "true": "CH",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.5591654777526855,
+      "photo_num": 9,
+      "factor": "rope_material",
+      "top3": [
+        [
+          "OHK",
+          0.5591654777526855
+        ],
+        [
+          "CH",
+          0.4239266514778137
+        ],
+        [
+          "ABK",
+          0.008001475594937801
+        ]
+      ]
+    },
+    {
+      "file": "1.jpg",
+      "true": "F8K",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.6606481671333313,
+      "photo_num": 1,
+      "factor": "baseline",
+      "top3": [
+        [
+          "OHK",
+          0.6606481671333313
+        ],
+        [
+          "F8K",
+          0.2748764455318451
+        ],
+        [
+          "ABK",
+          0.04777771234512329
+        ]
+      ]
+    },
+    {
+      "file": "10.jpg",
+      "true": "F8K",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.8017931580543518,
+      "photo_num": 10,
+      "factor": "combined_shift",
+      "top3": [
+        [
+          "OHK",
+          0.8017931580543518
+        ],
+        [
+          "F8K",
+          0.19445540010929108
+        ],
+        [
+          "ABK",
+          0.0012932030949741602
+        ]
+      ]
+    },
+    {
+      "file": "2.jpg",
+      "true": "F8K",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.8989222049713135,
+      "photo_num": 2,
+      "factor": "angle",
+      "top3": [
+        [
+          "OHK",
+          0.8989222049713135
+        ],
+        [
+          "ABK",
+          0.06371213495731354
+        ],
+        [
+          "F8K",
+          0.027280079200863838
+        ]
+      ]
+    },
+    {
+      "file": "3.jpg",
+      "true": "F8K",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.5182880759239197,
+      "photo_num": 3,
+      "factor": "angle",
+      "top3": [
+        [
+          "OHK",
+          0.5182880759239197
+        ],
+        [
+          "F8K",
+          0.3422476649284363
+        ],
+        [
+          "ABK",
+          0.11655294895172119
+        ]
+      ]
+    },
+    {
+      "file": "4.jpg",
+      "true": "F8K",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.688511312007904,
+      "photo_num": 4,
+      "factor": "looseness",
+      "top3": [
+        [
+          "OHK",
+          0.688511312007904
+        ],
+        [
+          "F8K",
+          0.26464515924453735
+        ],
+        [
+          "ABK",
+          0.03372928872704506
+        ]
+      ]
+    },
+    {
+      "file": "5.jpg",
+      "true": "F8K",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.8565288782119751,
+      "photo_num": 5,
+      "factor": "looseness+angle",
+      "top3": [
+        [
+          "OHK",
+          0.8565288782119751
+        ],
+        [
+          "ABK",
+          0.06287946552038193
+        ],
+        [
+          "F8K",
+          0.06225788965821266
+        ]
+      ]
+    },
+    {
+      "file": "6.jpg",
+      "true": "F8K",
+      "pred": "F8K",
+      "correct": true,
+      "confidence": 0.7716101408004761,
+      "photo_num": 6,
+      "factor": "background",
+      "top3": [
+        [
+          "F8K",
+          0.7716101408004761
+        ],
+        [
+          "ABK",
+          0.1383192539215088
+        ],
+        [
+          "OHK",
+          0.04142311215400696
+        ]
+      ]
+    },
+    {
+      "file": "7.jpg",
+      "true": "F8K",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.7238415479660034,
+      "photo_num": 7,
+      "factor": "background",
+      "top3": [
+        [
+          "OHK",
+          0.7238415479660034
+        ],
+        [
+          "F8K",
+          0.2195669412612915
+        ],
+        [
+          "ABK",
+          0.041705332696437836
+        ]
+      ]
+    },
+    {
+      "file": "8.jpg",
+      "true": "F8K",
+      "pred": "F8K",
+      "correct": true,
+      "confidence": 0.684257447719574,
+      "photo_num": 8,
+      "factor": "lighting",
+      "top3": [
+        [
+          "F8K",
+          0.684257447719574
+        ],
+        [
+          "OHK",
+          0.26683956384658813
+        ],
+        [
+          "ABK",
+          0.03925227001309395
+        ]
+      ]
+    },
+    {
+      "file": "9.jpg",
+      "true": "F8K",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.9957412481307983,
+      "photo_num": 9,
+      "factor": "rope_material",
+      "top3": [
+        [
+          "OHK",
+          0.9957412481307983
+        ],
+        [
+          "F8K",
+          0.003098187269642949
+        ],
+        [
+          "ABK",
+          0.00045668703387491405
+        ]
+      ]
+    },
+    {
+      "file": "1.jpg",
+      "true": "F8L",
+      "pred": "SK",
+      "correct": false,
+      "confidence": 0.9428954720497131,
+      "photo_num": 1,
+      "factor": "baseline",
+      "top3": [
+        [
+          "SK",
+          0.9428954720497131
+        ],
+        [
+          "BK",
+          0.03626248240470886
+        ],
+        [
+          "F8L",
+          0.014961893670260906
+        ]
+      ]
+    },
+    {
+      "file": "10.jpg",
+      "true": "F8L",
+      "pred": "SK",
+      "correct": false,
+      "confidence": 0.9579886794090271,
+      "photo_num": 10,
+      "factor": "combined_shift",
+      "top3": [
+        [
+          "SK",
+          0.9579886794090271
+        ],
+        [
+          "BK",
+          0.029087726026773453
+        ],
+        [
+          "F8L",
+          0.0067338282242417336
+        ]
+      ]
+    },
+    {
+      "file": "2.jpg",
+      "true": "F8L",
+      "pred": "SK",
+      "correct": false,
+      "confidence": 0.549022376537323,
+      "photo_num": 2,
+      "factor": "angle",
+      "top3": [
+        [
+          "SK",
+          0.549022376537323
+        ],
+        [
+          "BK",
+          0.39326319098472595
+        ],
+        [
+          "FSK",
+          0.03420474752783775
+        ]
+      ]
+    },
+    {
+      "file": "3.jpg",
+      "true": "F8L",
+      "pred": "SK",
+      "correct": false,
+      "confidence": 0.8093765377998352,
+      "photo_num": 3,
+      "factor": "angle",
+      "top3": [
+        [
+          "SK",
+          0.8093765377998352
+        ],
+        [
+          "BK",
+          0.16506005823612213
+        ],
+        [
+          "F8L",
+          0.014812356792390347
+        ]
+      ]
+    },
+    {
+      "file": "4.jpg",
+      "true": "F8L",
+      "pred": "F8L",
+      "correct": true,
+      "confidence": 0.9065553545951843,
+      "photo_num": 4,
+      "factor": "looseness",
+      "top3": [
+        [
+          "F8L",
+          0.9065553545951843
+        ],
+        [
+          "BK",
+          0.09199107438325882
+        ],
+        [
+          "SK",
+          0.001323593663983047
+        ]
+      ]
+    },
+    {
+      "file": "5.jpg",
+      "true": "F8L",
+      "pred": "F8L",
+      "correct": true,
+      "confidence": 0.9354466199874878,
+      "photo_num": 5,
+      "factor": "looseness+angle",
+      "top3": [
+        [
+          "F8L",
+          0.9354466199874878
+        ],
+        [
+          "BK",
+          0.06388920545578003
+        ],
+        [
+          "SK",
+          0.000267277006059885
+        ]
+      ]
+    },
+    {
+      "file": "6.jpg",
+      "true": "F8L",
+      "pred": "SK",
+      "correct": false,
+      "confidence": 0.9102827906608582,
+      "photo_num": 6,
+      "factor": "background",
+      "top3": [
+        [
+          "SK",
+          0.9102827906608582
+        ],
+        [
+          "F8L",
+          0.04568060114979744
+        ],
+        [
+          "BK",
+          0.034624092280864716
+        ]
+      ]
+    },
+    {
+      "file": "7.jpg",
+      "true": "F8L",
+      "pred": "ABK",
+      "correct": false,
+      "confidence": 0.5480305552482605,
+      "photo_num": 7,
+      "factor": "background",
+      "top3": [
+        [
+          "ABK",
+          0.5480305552482605
+        ],
+        [
+          "F8K",
+          0.1583632230758667
+        ],
+        [
+          "SK",
+          0.12219564616680145
+        ]
+      ]
+    },
+    {
+      "file": "8.jpg",
+      "true": "F8L",
+      "pred": "F8L",
+      "correct": true,
+      "confidence": 0.9953296184539795,
+      "photo_num": 8,
+      "factor": "lighting",
+      "top3": [
+        [
+          "F8L",
+          0.9953296184539795
+        ],
+        [
+          "SK",
+          0.003195954952389002
+        ],
+        [
+          "BK",
+          0.001084206043742597
+        ]
+      ]
+    },
+    {
+      "file": "9.jpg",
+      "true": "F8L",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.43850284814834595,
+      "photo_num": 9,
+      "factor": "rope_material",
+      "top3": [
+        [
+          "OHK",
+          0.43850284814834595
+        ],
+        [
+          "SK",
+          0.43240731954574585
+        ],
+        [
+          "BK",
+          0.06246595457196236
+        ]
+      ]
+    },
+    {
+      "file": "1.jpg",
+      "true": "FSK",
+      "pred": "FSK",
+      "correct": true,
+      "confidence": 0.534437894821167,
+      "photo_num": 1,
+      "factor": "baseline",
+      "top3": [
+        [
+          "FSK",
+          0.534437894821167
+        ],
+        [
+          "SK",
+          0.3391111493110657
+        ],
+        [
+          "BK",
+          0.05550596863031387
+        ]
+      ]
+    },
+    {
+      "file": "10.jpg",
+      "true": "FSK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.9641151428222656,
+      "photo_num": 10,
+      "factor": "combined_shift",
+      "top3": [
+        [
+          "OHK",
+          0.9641151428222656
+        ],
+        [
+          "BK",
+          0.01016769465059042
+        ],
+        [
+          "SK",
+          0.00895113404840231
+        ]
+      ]
+    },
+    {
+      "file": "2.jpg",
+      "true": "FSK",
+      "pred": "FSK",
+      "correct": true,
+      "confidence": 0.6331344842910767,
+      "photo_num": 2,
+      "factor": "angle",
+      "top3": [
+        [
+          "FSK",
+          0.6331344842910767
+        ],
+        [
+          "SK",
+          0.2471494823694229
+        ],
+        [
+          "BK",
+          0.10199239104986191
+        ]
+      ]
+    },
+    {
+      "file": "3.jpg",
+      "true": "FSK",
+      "pred": "FSK",
+      "correct": true,
+      "confidence": 0.9208666682243347,
+      "photo_num": 3,
+      "factor": "angle",
+      "top3": [
+        [
+          "FSK",
+          0.9208666682243347
+        ],
+        [
+          "BK",
+          0.030819222331047058
+        ],
+        [
+          "SK",
+          0.030270526185631752
+        ]
+      ]
+    },
+    {
+      "file": "4.jpg",
+      "true": "FSK",
+      "pred": "SK",
+      "correct": false,
+      "confidence": 0.40256524085998535,
+      "photo_num": 4,
+      "factor": "looseness",
+      "top3": [
+        [
+          "SK",
+          0.40256524085998535
+        ],
+        [
+          "OHK",
+          0.29716092348098755
+        ],
+        [
+          "FSK",
+          0.2084183692932129
+        ]
+      ]
+    },
+    {
+      "file": "5.jpg",
+      "true": "FSK",
+      "pred": "FSK",
+      "correct": true,
+      "confidence": 0.38120368123054504,
+      "photo_num": 5,
+      "factor": "looseness+angle",
+      "top3": [
+        [
+          "FSK",
+          0.38120368123054504
+        ],
+        [
+          "SK",
+          0.33140164613723755
+        ],
+        [
+          "BK",
+          0.24874122440814972
+        ]
+      ]
+    },
+    {
+      "file": "6.jpg",
+      "true": "FSK",
+      "pred": "SK",
+      "correct": false,
+      "confidence": 0.40901994705200195,
+      "photo_num": 6,
+      "factor": "background",
+      "top3": [
+        [
+          "SK",
+          0.40901994705200195
+        ],
+        [
+          "FSK",
+          0.34507736563682556
+        ],
+        [
+          "BK",
+          0.17480827867984772
+        ]
+      ]
+    },
+    {
+      "file": "7.jpg",
+      "true": "FSK",
+      "pred": "FSK",
+      "correct": true,
+      "confidence": 0.3964446485042572,
+      "photo_num": 7,
+      "factor": "background",
+      "top3": [
+        [
+          "FSK",
+          0.3964446485042572
+        ],
+        [
+          "BK",
+          0.2260432094335556
+        ],
+        [
+          "SK",
+          0.20142264664173126
+        ]
+      ]
+    },
+    {
+      "file": "8.jpg",
+      "true": "FSK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.512067973613739,
+      "photo_num": 8,
+      "factor": "lighting",
+      "top3": [
+        [
+          "OHK",
+          0.512067973613739
+        ],
+        [
+          "SK",
+          0.19614171981811523
+        ],
+        [
+          "BK",
+          0.133693128824234
+        ]
+      ]
+    },
+    {
+      "file": "9.jpg",
+      "true": "FSK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.9413684606552124,
+      "photo_num": 9,
+      "factor": "rope_material",
+      "top3": [
+        [
+          "OHK",
+          0.9413684606552124
+        ],
+        [
+          "RK",
+          0.030153291299939156
+        ],
+        [
+          "BK",
+          0.015114507637917995
+        ]
+      ]
+    },
+    {
+      "file": "1.jpg",
+      "true": "FMB",
+      "pred": "F8K",
+      "correct": false,
+      "confidence": 0.5313383936882019,
+      "photo_num": 1,
+      "factor": "baseline",
+      "top3": [
+        [
+          "F8K",
+          0.5313383936882019
+        ],
+        [
+          "F8L",
+          0.2343464195728302
+        ],
+        [
+          "SK",
+          0.13627088069915771
+        ]
+      ]
+    },
+    {
+      "file": "10.jpg",
+      "true": "FMB",
+      "pred": "F8K",
+      "correct": false,
+      "confidence": 0.48761627078056335,
+      "photo_num": 10,
+      "factor": "combined_shift",
+      "top3": [
+        [
+          "F8K",
+          0.48761627078056335
+        ],
+        [
+          "FSK",
+          0.2370697259902954
+        ],
+        [
+          "OHK",
+          0.19278398156166077
+        ]
+      ]
+    },
+    {
+      "file": "2.jpg",
+      "true": "FMB",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.35951006412506104,
+      "photo_num": 2,
+      "factor": "angle",
+      "top3": [
+        [
+          "OHK",
+          0.35951006412506104
+        ],
+        [
+          "FSK",
+          0.35564184188842773
+        ],
+        [
+          "F8K",
+          0.20087411999702454
+        ]
+      ]
+    },
+    {
+      "file": "3.jpg",
+      "true": "FMB",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.3540273606777191,
+      "photo_num": 3,
+      "factor": "angle",
+      "top3": [
+        [
+          "OHK",
+          0.3540273606777191
+        ],
+        [
+          "FSK",
+          0.2960853576660156
+        ],
+        [
+          "F8K",
+          0.2731650471687317
+        ]
+      ]
+    },
+    {
+      "file": "4.jpg",
+      "true": "FMB",
+      "pred": "F8L",
+      "correct": false,
+      "confidence": 0.812731146812439,
+      "photo_num": 4,
+      "factor": "looseness",
+      "top3": [
+        [
+          "F8L",
+          0.812731146812439
+        ],
+        [
+          "FSK",
+          0.06028885766863823
+        ],
+        [
+          "F8K",
+          0.05553722754120827
+        ]
+      ]
+    },
+    {
+      "file": "5.jpg",
+      "true": "FMB",
+      "pred": "F8K",
+      "correct": false,
+      "confidence": 0.4595973789691925,
+      "photo_num": 5,
+      "factor": "looseness+angle",
+      "top3": [
+        [
+          "F8K",
+          0.4595973789691925
+        ],
+        [
+          "OHK",
+          0.35927823185920715
+        ],
+        [
+          "SK",
+          0.042497679591178894
+        ]
+      ]
+    },
+    {
+      "file": "6.jpg",
+      "true": "FMB",
+      "pred": "F8L",
+      "correct": false,
+      "confidence": 0.6081047654151917,
+      "photo_num": 6,
+      "factor": "background",
+      "top3": [
+        [
+          "F8L",
+          0.6081047654151917
+        ],
+        [
+          "F8K",
+          0.24049249291419983
+        ],
+        [
+          "SK",
+          0.05579608306288719
+        ]
+      ]
+    },
+    {
+      "file": "7.jpg",
+      "true": "FMB",
+      "pred": "FSK",
+      "correct": false,
+      "confidence": 0.3397060036659241,
+      "photo_num": 7,
+      "factor": "background",
+      "top3": [
+        [
+          "FSK",
+          0.3397060036659241
+        ],
+        [
+          "F8K",
+          0.2246679663658142
+        ],
+        [
+          "SK",
+          0.18717747926712036
+        ]
+      ]
+    },
+    {
+      "file": "8.jpg",
+      "true": "FMB",
+      "pred": "FSK",
+      "correct": false,
+      "confidence": 0.510555624961853,
+      "photo_num": 8,
+      "factor": "lighting",
+      "top3": [
+        [
+          "FSK",
+          0.510555624961853
+        ],
+        [
+          "ABK",
+          0.3121543526649475
+        ],
+        [
+          "F8K",
+          0.10031277686357498
+        ]
+      ]
+    },
+    {
+      "file": "9.jpg",
+      "true": "FMB",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.9876157641410828,
+      "photo_num": 9,
+      "factor": "rope_material",
+      "top3": [
+        [
+          "OHK",
+          0.9876157641410828
+        ],
+        [
+          "F8K",
+          0.00738624157384038
+        ],
+        [
+          "RK",
+          0.0018091315869241953
+        ]
+      ]
+    },
+    {
+      "file": "1.jpg",
+      "true": "OHK",
+      "pred": "OHK",
+      "correct": true,
+      "confidence": 0.9952279329299927,
+      "photo_num": 1,
+      "factor": "baseline",
+      "top3": [
+        [
+          "OHK",
+          0.9952279329299927
+        ],
+        [
+          "F8K",
+          0.0038557960651814938
+        ],
+        [
+          "ABK",
+          0.0002923597930930555
+        ]
+      ]
+    },
+    {
+      "file": "10.jpg",
+      "true": "OHK",
+      "pred": "OHK",
+      "correct": true,
+      "confidence": 0.9967508316040039,
+      "photo_num": 10,
+      "factor": "combined_shift",
+      "top3": [
+        [
+          "OHK",
+          0.9967508316040039
+        ],
+        [
+          "F8K",
+          0.002878960222005844
+        ],
+        [
+          "RK",
+          0.00017332159040961415
+        ]
+      ]
+    },
+    {
+      "file": "2.jpg",
+      "true": "OHK",
+      "pred": "OHK",
+      "correct": true,
+      "confidence": 0.992404043674469,
+      "photo_num": 2,
+      "factor": "angle",
+      "top3": [
+        [
+          "OHK",
+          0.992404043674469
+        ],
+        [
+          "F8K",
+          0.00677476217970252
+        ],
+        [
+          "ABK",
+          0.00039352549356408417
+        ]
+      ]
+    },
+    {
+      "file": "3.jpg",
+      "true": "OHK",
+      "pred": "OHK",
+      "correct": true,
+      "confidence": 0.9937543272972107,
+      "photo_num": 3,
+      "factor": "angle",
+      "top3": [
+        [
+          "OHK",
+          0.9937543272972107
+        ],
+        [
+          "F8K",
+          0.004178747534751892
+        ],
+        [
+          "ABK",
+          0.0013118369970470667
+        ]
+      ]
+    },
+    {
+      "file": "4.jpg",
+      "true": "OHK",
+      "pred": "OHK",
+      "correct": true,
+      "confidence": 0.9943443536758423,
+      "photo_num": 4,
+      "factor": "looseness",
+      "top3": [
+        [
+          "OHK",
+          0.9943443536758423
+        ],
+        [
+          "F8K",
+          0.00516577810049057
+        ],
+        [
+          "ABK",
+          0.0002452221524436027
+        ]
+      ]
+    },
+    {
+      "file": "5.jpg",
+      "true": "OHK",
+      "pred": "OHK",
+      "correct": true,
+      "confidence": 0.9830960035324097,
+      "photo_num": 5,
+      "factor": "looseness+angle",
+      "top3": [
+        [
+          "OHK",
+          0.9830960035324097
+        ],
+        [
+          "F8K",
+          0.015148363076150417
+        ],
+        [
+          "ABK",
+          0.0012315807398408651
+        ]
+      ]
+    },
+    {
+      "file": "6.jpg",
+      "true": "OHK",
+      "pred": "F8K",
+      "correct": false,
+      "confidence": 0.6076512336730957,
+      "photo_num": 6,
+      "factor": "background",
+      "top3": [
+        [
+          "F8K",
+          0.6076512336730957
+        ],
+        [
+          "OHK",
+          0.3876546621322632
+        ],
+        [
+          "ABK",
+          0.0019724536687135696
+        ]
+      ]
+    },
+    {
+      "file": "7.jpg",
+      "true": "OHK",
+      "pred": "OHK",
+      "correct": true,
+      "confidence": 0.9443464875221252,
+      "photo_num": 7,
+      "factor": "background",
+      "top3": [
+        [
+          "OHK",
+          0.9443464875221252
+        ],
+        [
+          "F8K",
+          0.032450899481773376
+        ],
+        [
+          "ABK",
+          0.011257102712988853
+        ]
+      ]
+    },
+    {
+      "file": "8.jpg",
+      "true": "OHK",
+      "pred": "OHK",
+      "correct": true,
+      "confidence": 0.9120469093322754,
+      "photo_num": 8,
+      "factor": "lighting",
+      "top3": [
+        [
+          "OHK",
+          0.9120469093322754
+        ],
+        [
+          "F8K",
+          0.08256053179502487
+        ],
+        [
+          "CH",
+          0.0025642842520028353
+        ]
+      ]
+    },
+    {
+      "file": "9.jpg",
+      "true": "OHK",
+      "pred": "OHK",
+      "correct": true,
+      "confidence": 0.9980660080909729,
+      "photo_num": 9,
+      "factor": "rope_material",
+      "top3": [
+        [
+          "OHK",
+          0.9980660080909729
+        ],
+        [
+          "F8K",
+          0.0008917413069866598
+        ],
+        [
+          "RK",
+          0.0006475024856626987
+        ]
+      ]
+    },
+    {
+      "file": "1.jpg",
+      "true": "RK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.6491759419441223,
+      "photo_num": 1,
+      "factor": "baseline",
+      "top3": [
+        [
+          "OHK",
+          0.6491759419441223
+        ],
+        [
+          "RK",
+          0.27729466557502747
+        ],
+        [
+          "SK",
+          0.03753213211894035
+        ]
+      ]
+    },
+    {
+      "file": "10.jpg",
+      "true": "RK",
+      "pred": "F8K",
+      "correct": false,
+      "confidence": 0.8016285300254822,
+      "photo_num": 10,
+      "factor": "combined_shift",
+      "top3": [
+        [
+          "F8K",
+          0.8016285300254822
+        ],
+        [
+          "RK",
+          0.11751879751682281
+        ],
+        [
+          "SK",
+          0.04824709892272949
+        ]
+      ]
+    },
+    {
+      "file": "2.jpg",
+      "true": "RK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.6995108127593994,
+      "photo_num": 2,
+      "factor": "angle",
+      "top3": [
+        [
+          "OHK",
+          0.6995108127593994
+        ],
+        [
+          "RK",
+          0.2007390707731247
+        ],
+        [
+          "SK",
+          0.04306863993406296
+        ]
+      ]
+    },
+    {
+      "file": "3.jpg",
+      "true": "RK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.7512791752815247,
+      "photo_num": 3,
+      "factor": "angle",
+      "top3": [
+        [
+          "OHK",
+          0.7512791752815247
+        ],
+        [
+          "RK",
+          0.1016668975353241
+        ],
+        [
+          "SK",
+          0.07198046147823334
+        ]
+      ]
+    },
+    {
+      "file": "4.jpg",
+      "true": "RK",
+      "pred": "SK",
+      "correct": false,
+      "confidence": 0.5267794728279114,
+      "photo_num": 4,
+      "factor": "looseness",
+      "top3": [
+        [
+          "SK",
+          0.5267794728279114
+        ],
+        [
+          "OHK",
+          0.28064247965812683
+        ],
+        [
+          "RK",
+          0.11756481975317001
+        ]
+      ]
+    },
+    {
+      "file": "5.jpg",
+      "true": "RK",
+      "pred": "SK",
+      "correct": false,
+      "confidence": 0.7133656740188599,
+      "photo_num": 5,
+      "factor": "looseness+angle",
+      "top3": [
+        [
+          "SK",
+          0.7133656740188599
+        ],
+        [
+          "F8K",
+          0.14282682538032532
+        ],
+        [
+          "RK",
+          0.06137664616107941
+        ]
+      ]
+    },
+    {
+      "file": "6.jpg",
+      "true": "RK",
+      "pred": "RK",
+      "correct": true,
+      "confidence": 0.4441322684288025,
+      "photo_num": 6,
+      "factor": "background",
+      "top3": [
+        [
+          "RK",
+          0.4441322684288025
+        ],
+        [
+          "SK",
+          0.2239818572998047
+        ],
+        [
+          "F8K",
+          0.17439134418964386
+        ]
+      ]
+    },
+    {
+      "file": "7.jpg",
+      "true": "RK",
+      "pred": "RK",
+      "correct": true,
+      "confidence": 0.4573298692703247,
+      "photo_num": 7,
+      "factor": "background",
+      "top3": [
+        [
+          "RK",
+          0.4573298692703247
+        ],
+        [
+          "OHK",
+          0.3679753839969635
+        ],
+        [
+          "F8K",
+          0.054582566022872925
+        ]
+      ]
+    },
+    {
+      "file": "8.jpg",
+      "true": "RK",
+      "pred": "F8K",
+      "correct": false,
+      "confidence": 0.8234425783157349,
+      "photo_num": 8,
+      "factor": "lighting",
+      "top3": [
+        [
+          "F8K",
+          0.8234425783157349
+        ],
+        [
+          "OHK",
+          0.13143931329250336
+        ],
+        [
+          "RK",
+          0.021765561774373055
+        ]
+      ]
+    },
+    {
+      "file": "9.jpg",
+      "true": "RK",
+      "pred": "RK",
+      "correct": true,
+      "confidence": 0.8286630511283875,
+      "photo_num": 9,
+      "factor": "rope_material",
+      "top3": [
+        [
+          "RK",
+          0.8286630511283875
+        ],
+        [
+          "OHK",
+          0.10533751547336578
+        ],
+        [
+          "SK",
+          0.05413638800382614
+        ]
+      ]
+    },
+    {
+      "file": "1.jpg",
+      "true": "SK",
+      "pred": "SK",
+      "correct": true,
+      "confidence": 0.9872201681137085,
+      "photo_num": 1,
+      "factor": "baseline",
+      "top3": [
+        [
+          "SK",
+          0.9872201681137085
+        ],
+        [
+          "BK",
+          0.007312326226383448
+        ],
+        [
+          "OHK",
+          0.0028720099944621325
+        ]
+      ]
+    },
+    {
+      "file": "10.jpg",
+      "true": "SK",
+      "pred": "SK",
+      "correct": true,
+      "confidence": 0.8232652544975281,
+      "photo_num": 10,
+      "factor": "combined_shift",
+      "top3": [
+        [
+          "SK",
+          0.8232652544975281
+        ],
+        [
+          "OHK",
+          0.17032864689826965
+        ],
+        [
+          "BK",
+          0.0035599160473793745
+        ]
+      ]
+    },
+    {
+      "file": "2.jpg",
+      "true": "SK",
+      "pred": "SK",
+      "correct": true,
+      "confidence": 0.766913652420044,
+      "photo_num": 2,
+      "factor": "angle",
+      "top3": [
+        [
+          "SK",
+          0.766913652420044
+        ],
+        [
+          "BK",
+          0.2122804969549179
+        ],
+        [
+          "OHK",
+          0.009791674092411995
+        ]
+      ]
+    },
+    {
+      "file": "3.jpg",
+      "true": "SK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.5042142868041992,
+      "photo_num": 3,
+      "factor": "angle",
+      "top3": [
+        [
+          "OHK",
+          0.5042142868041992
+        ],
+        [
+          "SK",
+          0.3763279616832733
+        ],
+        [
+          "BK",
+          0.06295088678598404
+        ]
+      ]
+    },
+    {
+      "file": "4.jpg",
+      "true": "SK",
+      "pred": "SK",
+      "correct": true,
+      "confidence": 0.9451344609260559,
+      "photo_num": 4,
+      "factor": "looseness",
+      "top3": [
+        [
+          "SK",
+          0.9451344609260559
+        ],
+        [
+          "BK",
+          0.037839535623788834
+        ],
+        [
+          "OHK",
+          0.01334140170365572
+        ]
+      ]
+    },
+    {
+      "file": "5.jpg",
+      "true": "SK",
+      "pred": "SK",
+      "correct": true,
+      "confidence": 0.9085255265235901,
+      "photo_num": 5,
+      "factor": "looseness+angle",
+      "top3": [
+        [
+          "SK",
+          0.9085255265235901
+        ],
+        [
+          "BK",
+          0.07040105760097504
+        ],
+        [
+          "ABK",
+          0.00894050020724535
+        ]
+      ]
+    },
+    {
+      "file": "6.jpg",
+      "true": "SK",
+      "pred": "SK",
+      "correct": true,
+      "confidence": 0.9940138459205627,
+      "photo_num": 6,
+      "factor": "background",
+      "top3": [
+        [
+          "SK",
+          0.9940138459205627
+        ],
+        [
+          "BK",
+          0.004665907938033342
+        ],
+        [
+          "FSK",
+          0.0004457856703083962
+        ]
+      ]
+    },
+    {
+      "file": "7.jpg",
+      "true": "SK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.9276142716407776,
+      "photo_num": 7,
+      "factor": "background",
+      "top3": [
+        [
+          "OHK",
+          0.9276142716407776
+        ],
+        [
+          "SK",
+          0.0622049979865551
+        ],
+        [
+          "BK",
+          0.002752334577962756
+        ]
+      ]
+    },
+    {
+      "file": "8.jpg",
+      "true": "SK",
+      "pred": "SK",
+      "correct": true,
+      "confidence": 0.9941664934158325,
+      "photo_num": 8,
+      "factor": "lighting",
+      "top3": [
+        [
+          "SK",
+          0.9941664934158325
+        ],
+        [
+          "OHK",
+          0.0035388816613703966
+        ],
+        [
+          "BK",
+          0.0011055072536692023
+        ]
+      ]
+    },
+    {
+      "file": "9.jpg",
+      "true": "SK",
+      "pred": "OHK",
+      "correct": false,
+      "confidence": 0.9303567409515381,
+      "photo_num": 9,
+      "factor": "rope_material",
+      "top3": [
+        [
+          "OHK",
+          0.9303567409515381
+        ],
+        [
+          "SK",
+          0.052641984075307846
+        ],
+        [
+          "BK",
+          0.01291512232273817
+        ]
+      ]
+    }
+  ]
+}
