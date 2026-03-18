@@ -77,7 +77,7 @@ def get_sample_images(data_dir, n_per_class=2):
     samples = {}
     for cls in CLASSES:
         pattern = os.path.join(data_dir, '**', f'{cls}_*Set*.jpg')
-        files = glob.glob(pattern, recursive=True)
+        files = sorted(glob.glob(pattern, recursive=True))
         if files:
             samples[cls] = random.sample(files, min(n_per_class, len(files)))
     return samples

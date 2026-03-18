@@ -81,6 +81,8 @@ def set_seed(seed=42):
     random.seed(seed); np.random.seed(seed); torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
 
 def get_device():
     if torch.cuda.is_available(): return torch.device("cuda")
@@ -99,7 +101,7 @@ class KnotDataset(Dataset):
         return img, torch.tensor(row['label'], dtype=torch.long)
 
 def parse_data(data_dir):
-    files = glob.glob(os.path.join(data_dir, '**', '*.jpg'), recursive=True)
+    files = sorted(glob.glob(os.path.join(data_dir, '**', '*.jpg'), recursive=True))
     c2i = {c:i for i,c in enumerate(CLASSES)}
     rows = []
     for f in files:

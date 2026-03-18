@@ -1,0 +1,52 @@
+{
+  "resnet18": {
+    "model": "resnet18",
+    "r_obs": -0.2913552365424684,
+    "p_value_mantel": 0.0577,
+    "spearman_rho": -0.2913552365424684,
+    "spearman_p": 0.05215756909609426,
+    "null_mean": -0.0013987910572346555,
+    "null_std": 0.15094466535104412,
+    "n_permutations": 9999
+  },
+  "resnet50": {
+    "model": "resnet50",
+    "r_obs": -0.4715367953633748,
+    "p_value_mantel": 0.0018,
+    "spearman_rho": -0.4715367953633748,
+    "spearman_p": 0.0010765504836820145,
+    "null_mean": 0.001621951636022816,
+    "null_std": 0.15456700790077949,
+    "n_permutations": 9999
+  },
+  "efficientnet_b0": {
+    "model": "efficientnet_b0",
+    "r_obs": -0.4914935335557014,
+    "p_value_mantel": 0.001,
+    "spearman_rho": -0.4914935335557014,
+    "spearman_p": 0.0006067293163084665,
+    "null_mean": -0.0007101010376674891,
+    "null_std": 0.15286628760069285,
+    "n_permutations": 9999
+  },
+  "vit": {
+    "model": "vit",
+    "r_obs": -0.39782171803179667,
+    "p_value_mantel": 0.0051,
+    "spearman_rho": -0.39782171803179667,
+    "spearman_p": 0.006804269752783026,
+    "null_mean": 0.0010814903617450303,
+    "null_std": 0.15028883874425633,
+    "n_permutations": 9999
+  },
+  "swin_t": {
+    "model": "swin_t",
+    "r_obs": -0.21416317936252727,
+    "p_value_mantel": 0.1726,
+    "spearman_rho": -0.21416317936252727,
+    "spearman_p": 0.15775157170508558,
+    "null_mean": -0.00031540409324478703,
+    "null_std": 0.1506521501960598,
+    "n_permutations": 9999
+  }
+}

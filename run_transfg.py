@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Knot Classification Experiments - Compact Runner"""
+"""TransFG (Transformer for Fine-Grained Recognition) - Knot Classification"""
 import os, sys, json, time, copy, random, glob
 import numpy as np
 import pandas as pd
@@ -71,16 +71,106 @@ def get_transforms(sz=224):
     te = transforms.Compose([transforms.Resize((sz,sz)), transforms.ToTensor(), transforms.Normalize(*norm)])
     return tr, te
 
-def make_model(name, nc, device):
-    if name == 'resnet18':
-        m = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
-        m.fc = nn.Sequential(nn.Dropout(0.5), nn.Linear(m.fc.in_features, nc))
-    elif name == 'vit':
-        m = models.vit_b_16(weights=models.ViT_B_16_Weights.DEFAULT)
-        m.heads.head = nn.Linear(m.heads.head.in_features, nc)
-    return m.to(device)
+class TransFGModel(nn.Module):
+    """TransFG: Transformer for Fine-Grained Recognition with Part Selection Module"""
+    def __init__(self, num_classes=10, pretrained=True, top_k=6):
+        super(TransFGModel, self).__init__()
+        self.num_classes = num_classes
+        self.top_k = top_k
+
+        # Load pre-trained ViT
+        vit = models.vit_b_16(weights=models.ViT_B_16_Weights.DEFAULT if pretrained else None)
+        self.hidden_dim = 768  # ViT-B/16 hidden dimension
+
+        # Store ViT components
+        self.patch_embed = vit.conv_proj
+        self.encoder_ln = vit.encoder.ln
+        self.encoder_blocks = nn.ModuleList(vit.encoder.layers)
+        self.vit_class_token = nn.Parameter(vit.class_token.clone())
+        self.vit_encoder_pos_embedding = nn.Parameter(vit.encoder.pos_embedding.clone())
+
+        # Learnable attention weights for part selection (alternative to direct attention weights)
+        # This acts as a part selector that learns which patches are important
+        self.part_selector = nn.Sequential(
+            nn.Linear(self.hidden_dim, self.hidden_dim),
+            nn.ReLU(),
+            nn.Linear(self.hidden_dim, 1)
+        )
+
+        # Two classification heads: global (CLS) and part (selected parts)
+        self.head_global = nn.Linear(self.hidden_dim, num_classes)
+        self.head_part = nn.Linear(self.hidden_dim, num_classes)
+
+    def forward(self, x):
+        """
+        Forward pass with Part Selection Module
+
+        Args:
+            x: Input images (B, 3, 224, 224)
+
+        Returns:
+            logits: Combined classification logits (B, num_classes)
+        """
+        B, C, H, W = x.shape
+
+        # Patch embedding: (B, 3, 224, 224) -> (B, num_patches, hidden_dim)
+        # Flatten patches
+        x = self.patch_embed(x)  # (B, hidden_dim, 14, 14)
+        x = x.reshape(B, self.hidden_dim, -1)  # (B, hidden_dim, 196)
+        x = x.permute(0, 2, 1)  # (B, 196, hidden_dim)
+
+        # Add CLS token
+        batch_class_token = self.vit_class_token.expand(B, -1, -1)  # (B, 1, hidden_dim)
+        x = torch.cat([batch_class_token, x], dim=1)  # (B, 197, hidden_dim)
+
+        # Add positional embedding
+        x = x + self.vit_encoder_pos_embedding
+
+        # Pass through encoder blocks
+        for block in self.encoder_blocks:
+            x = block(x)
+
+        # Layer norm
+        x = self.encoder_ln(x)
+
+        # x shape: (B, 197, hidden_dim)
+        # x[:, 0] is CLS token, x[:, 1:] are patch tokens
+        cls_token = x[:, 0]  # (B, hidden_dim)
+        patch_tokens = x[:, 1:]  # (B, 196, hidden_dim)
+
+        # Part Selection Module: select top-k patches
+        # Use part selector to compute importance scores for each patch
+        patch_scores = self.part_selector(patch_tokens)  # (B, 196, 1)
+        patch_scores = patch_scores.squeeze(-1)  # (B, 196)
+
+        # Select top-k patches based on importance scores
+        actual_k = min(self.top_k, patch_tokens.shape[1])
+        _, top_k_indices = torch.topk(patch_scores, actual_k, dim=1)
+
+        # Gather top-k patch tokens
+        # top_k_indices: (B, actual_k)
+        part_tokens = torch.gather(patch_tokens, 1,
+                                  top_k_indices.unsqueeze(-1).expand(-1, -1, self.hidden_dim))  # (B, actual_k, hidden_dim)
+
+        # Aggregate selected parts via mean pooling
+        part_feat = part_tokens.mean(dim=1)  # (B, hidden_dim)
+
+        # Classification heads
+        global_logits = self.head_global(cls_token)  # (B, num_classes)
+        part_logits = self.head_part(part_feat)      # (B, num_classes)
+
+        # Combine predictions: average the two heads
+        combined_logits = (global_logits + part_logits) / 2.0
+
+        return combined_logits
+
+def make_transfg_model(num_classes=10, device='cpu', pretrained=True, top_k=6):
+    """Create TransFG model"""
+    model = TransFGModel(num_classes=num_classes, pretrained=pretrained, top_k=top_k)
+    return model.to(device)
 
 def train_model(model, loaders, device, epochs=20, lr=1e-4):
+    """Train TransFG model"""
     opt = optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
     crit = nn.CrossEntropyLoss()
     sched = optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs)
@@ -107,6 +197,7 @@ def train_model(model, loaders, device, epochs=20, lr=1e-4):
     return model, hist, best_acc
 
 def evaluate(model, loader, device):
+    """Evaluate model on dataset"""
     model.eval(); preds, labels = [], []
     with torch.no_grad():
         for x, y in loader:
@@ -115,8 +206,13 @@ def evaluate(model, loader, device):
             labels.extend(y.numpy())
     return np.array(preds), np.array(labels)
 
-def run_experiment(model_name, df, device, epochs=20):
-    print(f'\n{"="*50}\n  Running: {model_name.upper()}\n{"="*50}', flush=True)
+def count_parameters(model):
+    """Count total number of parameters"""
+    return sum(p.numel() for p in model.parameters()) / 1e6
+
+def run_experiment(df, device, epochs=20, top_k=6):
+    """Run TransFG experiment"""
+    print(f'\n{"="*50}\n  Running: TransFG (top_k={top_k})\n{"="*50}', flush=True)
     tr_full = df[df['split']=='train']; te_df = df[df['split']=='test']
     tr_df, va_df = train_test_split(tr_full, test_size=0.2, stratify=tr_full['label'], random_state=SEED)
     tr_tf, te_tf = get_transforms()
@@ -125,7 +221,9 @@ def run_experiment(model_name, df, device, epochs=20):
         'val': DataLoader(KnotDataset(va_df, te_tf), batch_size=32)
     }
     test_loader = DataLoader(KnotDataset(te_df, te_tf), batch_size=32)
-    model = make_model(model_name, len(CLASSES), device)
+    model = make_transfg_model(num_classes=len(CLASSES), device=device, pretrained=True, top_k=top_k)
+    params = count_parameters(model)
+    print(f'  Model parameters: {params:.2f}M', flush=True)
     t0 = time.time()
     model, hist, best_val = train_model(model, loaders, device, epochs)
     train_time = time.time() - t0
@@ -135,11 +233,22 @@ def run_experiment(model_name, df, device, epochs=20):
     test_acc = (preds == labels).mean()
     print(f'  Test Acc: {test_acc:.4f} | Best Val: {best_val:.4f} | Time: {train_time:.0f}s', flush=True)
     print(classification_report(labels, preds, target_names=CLASSES, zero_division=0), flush=True)
+
+    # Compute macro F1
+    macro_f1 = report['macro avg']['f1-score']
+
     return {
-        'model': model_name, 'history': hist, 'best_val_acc': best_val,
-        'test_acc': float(test_acc), 'train_time': train_time,
-        'report': report, 'confusion_matrix': cm.tolist(),
-        'preds': preds.tolist(), 'labels': labels.tolist()
+        'model': 'TransFG',
+        'params': f'{params:.2f}M',
+        'val_acc': float(best_val),
+        'test_acc': float(test_acc),
+        'macro_f1': float(macro_f1),
+        'training_time': train_time,
+        'history': hist,
+        'confusion_matrix': cm.tolist(),
+        'per_class_report': report,
+        'preds': preds.tolist(),
+        'labels': labels.tolist()
     }
 
 if __name__ == '__main__':
@@ -150,17 +259,10 @@ if __name__ == '__main__':
     df = parse_data(DATA_DIR)
     print(f'Total: {len(df)} (train:{len(df[df.split=="train"])}, test:{len(df[df.split=="test"])})', flush=True)
 
-    # 1. ResNet18
-    res = run_experiment('resnet18', df, device, epochs=20)
-    with open(f'{RESULTS_DIR}/resnet18_results.json', 'w') as f:
+    # TransFG with top_k=6
+    res = run_experiment(df, device, epochs=20, top_k=6)
+    with open(f'{RESULTS_DIR}/transfg_results.json', 'w') as f:
         json.dump(res, f, indent=2)
-    print('[Saved] resnet18_results.json', flush=True)
+    print('[Saved] transfg_results.json', flush=True)
 
-    # 2. ViT
-    set_seed(SEED)
-    res = run_experiment('vit', df, device, epochs=20)
-    with open(f'{RESULTS_DIR}/vit_results.json', 'w') as f:
-        json.dump(res, f, indent=2)
-    print('[Saved] vit_results.json', flush=True)
-
-    print('\n[DONE] All experiments complete.', flush=True)
+    print('\n[DONE] TransFG experiment complete.', flush=True)

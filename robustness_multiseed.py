@@ -52,6 +52,8 @@ def set_seed(s):
     random.seed(s); np.random.seed(s); torch.manual_seed(s)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(s)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
 
 def get_device():
     if torch.cuda.is_available(): return torch.device("cuda")
@@ -59,19 +61,32 @@ def get_device():
     return torch.device("cpu")
 
 class KnotDataset(Dataset):
-    def __init__(self, df, transform=None):
-        self.df = df; self.transform = transform
+    def __init__(self, df, transform=None, preload=True):
+        self.df = df.reset_index(drop=True)
+        self.transform = transform
+        self.images = []
+        if preload:
+            for _, row in self.df.iterrows():
+                try:
+                    img = Image.open(row['path']).convert('RGB')
+                except Exception:
+                    img = Image.new('RGB', (224, 224), (0, 0, 0))
+                self.images.append(img)
+        self.preloaded = preload
     def __len__(self): return len(self.df)
     def __getitem__(self, idx):
-        row = self.df.iloc[idx]
-        try: img = Image.open(row['path']).convert('RGB')
-        except: img = Image.new('RGB', (224,224), (0,0,0))
+        if self.preloaded:
+            img = self.images[idx]
+        else:
+            row = self.df.iloc[idx]
+            try: img = Image.open(row['path']).convert('RGB')
+            except Exception: img = Image.new('RGB', (224, 224), (0, 0, 0))
         if self.transform: img = self.transform(img)
-        return img, torch.tensor(row['label'], dtype=torch.long)
+        return img, torch.tensor(self.df.iloc[idx]['label'], dtype=torch.long)
 
 def parse_data(data_dir):
     import pandas as pd
-    files = glob.glob(os.path.join(data_dir, '**', '*.jpg'), recursive=True)
+    files = sorted(glob.glob(os.path.join(data_dir, '**', '*.jpg'), recursive=True))
     c2i = {c:i for i,c in enumerate(CLASSES)}
     rows = []
     for f in files:
@@ -117,14 +132,13 @@ def make_model(name, nc, device):
 class TopoLoss(nn.Module):
     def __init__(self, topo_dist, lam_taca=0.0, lam_taml=0.0):
         super().__init__()
-        self.topo = torch.tensor(topo_dist, dtype=torch.float32)
+        self.register_buffer('topo', torch.tensor(topo_dist, dtype=torch.float32))
         self.lam_taca = lam_taca
         self.lam_taml = lam_taml
         self.ce = nn.CrossEntropyLoss()
 
     def forward(self, logits, labels, emb=None):
         dev = logits.device
-        self.topo = self.topo.to(dev)
         ce = self.ce(logits, labels)
         total = ce
 
@@ -145,17 +159,17 @@ class TopoLoss(nn.Module):
         if self.lam_taml > 0 and emb is not None:
             enorm = nn.functional.normalize(emb, dim=1)
             sim = torch.mm(enorm, enorm.t())
-            mloss = []
-            for i in range(emb.size(0)):
-                yi = labels[i]
-                for j in range(emb.size(0)):
-                    if i == j: continue
-                    yj = labels[j]
-                    if yi == yj: continue
-                    margin = self.topo[yi, yj]
-                    mloss.append(torch.relu(sim[i,j] - (1.0 - margin)))
-            if len(mloss) > 0:
-                total = total + self.lam_taml * torch.stack(mloss).mean()
+            B = emb.size(0)
+            # Vectorized: mask for different-index AND different-label pairs
+            idx_mask = ~torch.eye(B, dtype=torch.bool, device=dev)
+            label_i = labels.unsqueeze(1).expand(B, B)
+            label_j = labels.unsqueeze(0).expand(B, B)
+            diff_label_mask = label_i != label_j
+            mask = idx_mask & diff_label_mask
+            if mask.any():
+                margins = self.topo[label_i, label_j]  # (B, B)
+                losses = torch.relu(sim - (1.0 - margins))
+                total = total + self.lam_taml * losses[mask].mean()
 
         return total
 
@@ -170,15 +184,19 @@ def train_and_eval(model_name, df, device, seed, lam_taca=0.0, lam_taml=0.0, epo
         tr_full, test_size=0.2, stratify=tr_full['label'], random_state=seed)
 
     tr_tf, te_tf = get_transforms()
-    tr_ld = DataLoader(KnotDataset(tr_df, tr_tf), batch_size=32, shuffle=True)
-    va_ld = DataLoader(KnotDataset(va_df, te_tf), batch_size=32)
-    te_ld = DataLoader(KnotDataset(te_df, te_tf), batch_size=32)
+    use_cuda = (device.type == 'cuda')
+    nw = 4 if use_cuda else 2
+    loader_kw = dict(batch_size=32, num_workers=nw, persistent_workers=True,
+                     pin_memory=use_cuda)
+    tr_ld = DataLoader(KnotDataset(tr_df, tr_tf), shuffle=True, **loader_kw)
+    va_ld = DataLoader(KnotDataset(va_df, te_tf), **loader_kw)
+    te_ld = DataLoader(KnotDataset(te_df, te_tf), **loader_kw)
 
     model = make_model(model_name, NUM_CLASSES, device)
     use_topo = (lam_taca > 0 or lam_taml > 0)
 
     if use_topo:
-        crit = TopoLoss(TOPO_DIST, lam_taca, lam_taml)
+        crit = TopoLoss(TOPO_DIST, lam_taca, lam_taml).to(device)
     else:
         crit = nn.CrossEntropyLoss()
 

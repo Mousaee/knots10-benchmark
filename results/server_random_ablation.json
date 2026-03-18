@@ -1,0 +1,61 @@
+{
+  "real_taca": {
+    "distance_type": "topological",
+    "test_accuracy": 0.9791666666666666,
+    "knn_1": 0.9729166666666667,
+    "knn_5": 0.9729166666666667,
+    "alignment_rho": 0.4484289994542456,
+    "alignment_p": 0.0020057910159838543,
+    "train_time": 4087.042003631592
+  },
+  "ce_only": {
+    "distance_type": "none",
+    "test_accuracy": 0.9833333333333333,
+    "knn_1": 0.98125,
+    "knn_5": 0.9833333333333333,
+    "alignment_rho": 0.43781372501828175,
+    "alignment_p": 0.002632069230355965,
+    "train_time": 4011.232813835144
+  },
+  "permuted_taca": [
+    {
+      "permutation_seed": 1000,
+      "test_accuracy": 0.9833333333333333,
+      "knn_1": 0.98125,
+      "knn_5": 0.98125,
+      "alignment_rho": 0.39249977226976135,
+      "alignment_p": 0.007656959905720749,
+      "train_time": 4033.528985261917
+    },
+    {
+      "permutation_seed": 1001,
+      "test_accuracy": 0.9791666666666666,
+      "knn_1": 0.975,
+      "knn_5": 0.975,
+      "alignment_rho": 0.42540712302124906,
+      "alignment_p": 0.003577366824335734,
+      "train_time": 4053.698778152466
+    },
+    {
+      "permutation_seed": 1002,
+      "test_accuracy": 0.9791666666666666,
+      "knn_1": 0.9770833333333333,
+      "knn_5": 0.98125,
+      "alignment_rho": 0.4405338890924975,
+      "alignment_p": 0.0024570431766398745,
+      "train_time": 4110.4156312942505
+    }
+  ],
+  "summary": {
+    "real_taca_vs_ce": {
+      "acc_diff": -0.004166666666666652,
+      "knn5_diff": -0.01041666666666663,
+      "align_diff": 0.010615274435963828
+    },
+    "real_taca_vs_permuted_mean": {
+      "acc_diff": -0.001388888888888884,
+      "knn5_diff": -0.006249999999999978,
+      "align_diff": 0.02894873799307629
+    }
+  }
+}

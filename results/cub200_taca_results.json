@@ -1,0 +1,15 @@
+{
+  "baseline": {
+    "test_acc": 0.8180876769071453,
+    "macro_f1": 0.8188760707978551,
+    "embed_spearman_rho": 0.10897378377643976,
+    "embed_spearman_p": 0.0
+  },
+  "taca": {
+    "test_acc": 0.8066965826717294,
+    "macro_f1": 0.8068247868557874,
+    "embed_spearman_rho": 0.08583647421387847,
+    "embed_spearman_p": 1.2421108174162228e-202,
+    "lambda_taca": 0.1
+  }
+}

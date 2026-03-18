@@ -12,7 +12,18 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans']
+plt.rcParams['font.sans-serif'] = ['Arial', 'Helvetica', 'DejaVu Sans']
+plt.rcParams.update({
+    'font.size': 9,
+    'axes.labelsize': 10,
+    'axes.titlesize': 10,
+    'xtick.labelsize': 8,
+    'ytick.labelsize': 8,
+    'legend.fontsize': 8,
+    'axes.linewidth': 0.8,
+    'pdf.fonttype': 42,
+    'ps.fonttype': 42,
+})
 plt.style.use('seaborn-v0_8-whitegrid')
 
 CLASSES = ['ABK','BK','CH','F8K','F8L','FSK','FMB','OHK','RK','SK']
@@ -150,7 +161,7 @@ def analyze_correlation(D, C, model_name):
 
 def plot_distance_heatmap(D):
     """Plot topological distance matrix."""
-    fig, ax = plt.subplots(figsize=(8, 7))
+    fig, ax = plt.subplots(figsize=(3.54, 3.2))  # 90mm single-column
     sns.heatmap(D, xticklabels=CLASSES, yticklabels=CLASSES,
                 annot=True, fmt='.2f', cmap='YlOrRd',
                 ax=ax, square=True, linewidths=0.5)
@@ -164,7 +175,7 @@ def plot_distance_heatmap(D):
 
 def plot_scatter(dists, confs, rho, p_spear, model_name):
     """Scatter plot: topological distance vs confusion rate."""
-    fig, ax = plt.subplots(figsize=(7, 6))
+    fig, ax = plt.subplots(figsize=(3.54, 3))  # 90mm single-column
     ax.scatter(dists, confs, alpha=0.6, s=60, c='#2196F3', edgecolors='white')
     
     # Fit line
@@ -194,7 +205,7 @@ def plot_difficulty_tiers(D):
     }
     colors = {'Easy':'#4CAF50', 'Medium':'#FF9800', 'Hard':'#F44336'}
     
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(7.5, 3.5))  # 190mm double-column
     y_pos = 0
     yticks, ylabels = [], []
     

@@ -31,6 +31,10 @@ TOPO_DIST = np.array([
 
 def set_seed(s=42):
     random.seed(s); np.random.seed(s); torch.manual_seed(s)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(s)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
 
 def get_device():
     if torch.backends.mps.is_available(): return torch.device("mps")
@@ -48,7 +52,7 @@ class KnotDataset(Dataset):
 
 def parse_data(data_dir, test=False):
     import pandas as pd
-    files = glob.glob(os.path.join(data_dir, '**', '*.jpg'), recursive=True)
+    files = sorted(glob.glob(os.path.join(data_dir, '**', '*.jpg'), recursive=True))
     c2i = {c:i for i,c in enumerate(CLASSES)}
     rows = []
     for f in files:
