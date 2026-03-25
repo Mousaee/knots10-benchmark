@@ -1,28 +1,32 @@
-# Knots-10: A Benchmark for Physical Knot Classification with Topology-Guided Representation Learning
+# Knots-10: A Tightness-Stratified Benchmark for Physical Knot Classification with Topological Difficulty Analysis
 
-> **Shiheng Nie, Xiaoli Liu, Yunguang Yue**
+> **Shiheng Nie, Yunguang Yue**
 >
 > College of Science, Shihezi University
+>
+> [[arXiv:2603.23286]](https://arxiv.org/abs/2603.23286)
 
 ## Overview
 
-**Knots-10** is a benchmark for fine-grained visual classification of physical knots from real-world photographs. Built on the [10Knots dataset](https://www.kaggle.com/datasets/josephcameron/10knots) (1,440 images, 10 knot types), we introduce:
+**Knots-10** is a tightness-stratified evaluation protocol for fine-grained visual classification of physical knots from real-world photographs. Built on the publicly available [10Knots dataset](https://www.kaggle.com/datasets/josephcameron/10knots) (1,440 images, 10 knot types, CC BY-SA 4.0), we introduce:
 
 - A **tightness-stratified evaluation protocol** that trains on loosely tied knots and tests on tightly dressed ones
-- A **topological distance metric** linking knot-theoretic properties to visual classification difficulty
+- A **diagnostic framework** (Mantel permutation test + random-distance ablation) for evaluating structure-guided training in any FGVC domain
 - **Topology-Aware Centroid Alignment (TACA)**, a regularization loss that aligns learned embeddings with knot-theoretic structure
 
 ### Key Results
 
-| Model | Test Acc | Macro F1 |
-|-------|----------|----------|
-| ResNet-18 | 95.83% | 0.959 |
-| ResNet-50 | 96.04% | 0.961 |
-| EfficientNet-B0 | 95.21% | 0.952 |
-| ViT-B/16 | 95.21% | 0.952 |
-| **Swin-T** | **99.38%** | **0.994** |
+| Model | Test Acc (mean +/- std) | Macro F1 |
+|-------|-------------------------|----------|
+| ResNet-18 | 96.88 +/- 1.06% | 0.969 |
+| ResNet-50 | 95.83 +/- 1.03% | 0.959 |
+| EfficientNet-B0 | 96.25 +/- 0.45% | 0.963 |
+| ViT-B/16 | 96.39 +/- 0.35% | 0.964 |
+| **Swin-T** | **97.22 +/- 1.09%** | **0.972** |
+| TransFG | 97.15 +/- 0.94% | 0.972 |
+| PMG | 94.51 +/- 1.75% | 0.945 |
 
-TACA improves ResNet-18 accuracy by **+1.25 pp** (95.83% → 97.08%) and increases embedding–topology alignment by **40%** (Spearman ρ: 0.46 → 0.65).
+TACA improves embedding-topology alignment by **40%** (Spearman rho: 0.46 -> 0.65) without harming classification accuracy.
 
 ## Setup
 
@@ -30,8 +34,8 @@ TACA improves ResNet-18 accuracy by **+1.25 pp** (95.83% → 97.08%) and increas
 pip install -r requirements.txt
 ```
 
-- Python ≥ 3.10
-- PyTorch ≥ 2.0 (MPS backend supported for Apple Silicon)
+- Python >= 3.10
+- PyTorch >= 2.0 (MPS backend supported for Apple Silicon)
 
 ### Dataset
 
@@ -95,28 +99,28 @@ python umap_comparison.py        # t-SNE / UMAP projections (Figure 3)
 ├── README.md
 ├── LICENSE
 ├── requirements.txt
-├── run_experiments.py           # Baseline experiments (5 architectures)
-├── topo_guided_training.py      # Topology-guided training (TACA + TAML)
-├── loss_ablation.py             # Loss component ablation
-├── topological_analysis.py      # Topological distance metric
-├── embedding_analysis.py        # Embedding alignment analysis
-├── weight_sensitivity.py        # Weight sensitivity analysis
-├── robustness_multiseed.py      # Multi-seed robustness analysis
-├── phone_inference.py           # Cross-domain phone photo evaluation
-├── gradcam_viz.py               # Grad-CAM visualization
-├── umap_comparison.py           # t-SNE and UMAP projections
-├── results/                     # Experiment results (JSON)
-└── paper/                       # Manuscript source and figures
+├── benchmark_config.py             # Class definitions (10-class / 28P)
+├── run_experiments.py              # Baseline experiments (5 architectures)
+├── topo_guided_training.py         # Topology-guided training (TACA + TAML)
+├── loss_ablation.py                # Loss component ablation
+├── topological_analysis.py         # Topological distance metric
+├── embedding_analysis.py           # Embedding alignment analysis
+├── weight_sensitivity.py           # Weight sensitivity analysis
+├── robustness_multiseed.py         # Multi-seed robustness analysis
+├── phone_inference.py              # Cross-domain phone photo evaluation
+├── gradcam_viz.py                  # Grad-CAM visualization
+├── umap_comparison.py              # t-SNE and UMAP projections
+└── results/                        # Experiment results (JSON)
 ```
 
 ## Citation
 
 ```bibtex
 @article{nie2026knots10,
-  title={Knots-10: A Benchmark for Physical Knot Classification
-         with Topology-Guided Representation Learning},
-  author={Nie, Shiheng and Liu, Xiaoli and Yue, Yunguang},
-  journal={Scientific Reports},
+  title={Knots-10: A Tightness-Stratified Benchmark for Physical Knot
+         Classification with Topological Difficulty Analysis},
+  author={Nie, Shiheng and Yue, Yunguang},
+  journal={arXiv preprint arXiv:2603.23286},
   year={2026}
 }
 ```
