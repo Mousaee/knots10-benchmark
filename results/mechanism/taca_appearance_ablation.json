@@ -1,0 +1,76 @@
+{
+  "swin_t": {
+    "ce_only": {
+      "original": 0.9604,
+      "grayscale": 0.7646,
+      "bg_removed": 0.75,
+      "hist_eq": 0.9521
+    },
+    "taca_real": {
+      "original": 0.9917,
+      "grayscale": 0.7375,
+      "bg_removed": 0.7937,
+      "hist_eq": 0.9646
+    },
+    "taca_rand": {
+      "original": 0.9812,
+      "grayscale": 0.7438,
+      "bg_removed": 0.7812,
+      "hist_eq": 0.95
+    },
+    "delta_appearance": {
+      "ce_only": {
+        "grayscale_drop": 0.1958,
+        "bg_removed_drop": 0.2104,
+        "hist_eq_drop": 0.0083
+      },
+      "taca_real": {
+        "grayscale_drop": 0.2542,
+        "bg_removed_drop": 0.198,
+        "hist_eq_drop": 0.0271
+      },
+      "taca_rand": {
+        "grayscale_drop": 0.2374,
+        "bg_removed_drop": 0.2,
+        "hist_eq_drop": 0.0312
+      }
+    }
+  },
+  "resnet50": {
+    "ce_only": {
+      "original": 0.9479,
+      "grayscale": 0.6792,
+      "bg_removed": 0.7312,
+      "hist_eq": 0.7792
+    },
+    "taca_real": {
+      "original": 0.9396,
+      "grayscale": 0.6729,
+      "bg_removed": 0.6771,
+      "hist_eq": 0.8083
+    },
+    "taca_rand": {
+      "original": 0.9667,
+      "grayscale": 0.6521,
+      "bg_removed": 0.7063,
+      "hist_eq": 0.8292
+    },
+    "delta_appearance": {
+      "ce_only": {
+        "grayscale_drop": 0.2687,
+        "bg_removed_drop": 0.2167,
+        "hist_eq_drop": 0.1687
+      },
+      "taca_real": {
+        "grayscale_drop": 0.2667,
+        "bg_removed_drop": 0.2625,
+        "hist_eq_drop": 0.1313
+      },
+      "taca_rand": {
+        "grayscale_drop": 0.3146,
+        "bg_removed_drop": 0.2604,
+        "hist_eq_drop": 0.1375
+      }
+    }
+  }
+}

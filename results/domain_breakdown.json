@@ -1,0 +1,472 @@
+{
+  "resnet18": {
+    "model": "resnet18",
+    "lighting_breakdown": {
+      "DL": {
+        "acc": 0.98125,
+        "n": 160,
+        "per_class": {
+          "ABK": 0.875,
+          "BK": 1.0,
+          "CH": 1.0,
+          "F8K": 1.0,
+          "F8L": 1.0,
+          "FSK": 1.0,
+          "FMB": 1.0,
+          "OHK": 1.0,
+          "RK": 1.0,
+          "SK": 0.9375
+        }
+      },
+      "SLA": {
+        "acc": 0.96875,
+        "n": 160,
+        "per_class": {
+          "ABK": 1.0,
+          "BK": 0.9375,
+          "CH": 1.0,
+          "F8K": 0.9375,
+          "F8L": 1.0,
+          "FSK": 0.8125,
+          "FMB": 1.0,
+          "OHK": 1.0,
+          "RK": 1.0,
+          "SK": 1.0
+        }
+      },
+      "SLS": {
+        "acc": 0.975,
+        "n": 160,
+        "per_class": {
+          "ABK": 1.0,
+          "BK": 1.0,
+          "CH": 1.0,
+          "F8K": 0.9375,
+          "F8L": 1.0,
+          "FSK": 1.0,
+          "FMB": 0.9375,
+          "OHK": 1.0,
+          "RK": 1.0,
+          "SK": 0.875
+        }
+      }
+    },
+    "tightness_breakdown": {
+      "Set": {
+        "acc": 0.975,
+        "n": 480
+      }
+    },
+    "tightness_lighting_matrix": {
+      "train_Loose_test_DL": {
+        "n_train_matching": 160,
+        "test_light": "DL",
+        "train_tightness": "Loose"
+      },
+      "train_Loose_test_SLA": {
+        "n_train_matching": 160,
+        "test_light": "SLA",
+        "train_tightness": "Loose"
+      },
+      "train_Loose_test_SLS": {
+        "n_train_matching": 160,
+        "test_light": "SLS",
+        "train_tightness": "Loose"
+      },
+      "train_VeryLoose_test_DL": {
+        "n_train_matching": 160,
+        "test_light": "DL",
+        "train_tightness": "VeryLoose"
+      },
+      "train_VeryLoose_test_SLA": {
+        "n_train_matching": 160,
+        "test_light": "SLA",
+        "train_tightness": "VeryLoose"
+      },
+      "train_VeryLoose_test_SLS": {
+        "n_train_matching": 160,
+        "test_light": "SLS",
+        "train_tightness": "VeryLoose"
+      }
+    },
+    "lighting_tightness_combined": {
+      "DL_Set": {
+        "acc": 0.98125,
+        "n": 160
+      },
+      "SLA_Set": {
+        "acc": 0.96875,
+        "n": 160
+      },
+      "SLS_Set": {
+        "acc": 0.975,
+        "n": 160
+      }
+    },
+    "worst_lighting": "SLA",
+    "worst_lighting_confusion": [
+      [
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        15,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        15,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        13,
+        1,
+        0,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        16,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        16,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        16,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        16
+      ]
+    ],
+    "worst_lighting_hard_pairs": {
+      "F8K-OHK": 0.96875,
+      "FSK-FMB": 0.90625,
+      "F8K-SK": 0.96875,
+      "F8K-F8L": 0.96875,
+      "RK-FSK": 0.90625
+    }
+  },
+  "resnet50": {
+    "model": "resnet50",
+    "lighting_breakdown": {
+      "DL": {
+        "acc": 0.91875,
+        "n": 160,
+        "per_class": {
+          "ABK": 0.9375,
+          "BK": 1.0,
+          "CH": 1.0,
+          "F8K": 0.9375,
+          "F8L": 1.0,
+          "FSK": 1.0,
+          "FMB": 0.875,
+          "OHK": 1.0,
+          "RK": 0.5625,
+          "SK": 0.875
+        }
+      },
+      "SLA": {
+        "acc": 0.9375,
+        "n": 160,
+        "per_class": {
+          "ABK": 1.0,
+          "BK": 0.9375,
+          "CH": 1.0,
+          "F8K": 1.0,
+          "F8L": 1.0,
+          "FSK": 1.0,
+          "FMB": 0.9375,
+          "OHK": 0.75,
+          "RK": 0.8125,
+          "SK": 0.9375
+        }
+      },
+      "SLS": {
+        "acc": 0.95,
+        "n": 160,
+        "per_class": {
+          "ABK": 1.0,
+          "BK": 1.0,
+          "CH": 1.0,
+          "F8K": 1.0,
+          "F8L": 1.0,
+          "FSK": 1.0,
+          "FMB": 0.875,
+          "OHK": 1.0,
+          "RK": 0.6875,
+          "SK": 0.9375
+        }
+      }
+    },
+    "tightness_breakdown": {
+      "Set": {
+        "acc": 0.9354166666666667,
+        "n": 480
+      }
+    },
+    "tightness_lighting_matrix": {
+      "train_Loose_test_DL": {
+        "n_train_matching": 160,
+        "test_light": "DL",
+        "train_tightness": "Loose"
+      },
+      "train_Loose_test_SLA": {
+        "n_train_matching": 160,
+        "test_light": "SLA",
+        "train_tightness": "Loose"
+      },
+      "train_Loose_test_SLS": {
+        "n_train_matching": 160,
+        "test_light": "SLS",
+        "train_tightness": "Loose"
+      },
+      "train_VeryLoose_test_DL": {
+        "n_train_matching": 160,
+        "test_light": "DL",
+        "train_tightness": "VeryLoose"
+      },
+      "train_VeryLoose_test_SLA": {
+        "n_train_matching": 160,
+        "test_light": "SLA",
+        "train_tightness": "VeryLoose"
+      },
+      "train_VeryLoose_test_SLS": {
+        "n_train_matching": 160,
+        "test_light": "SLS",
+        "train_tightness": "VeryLoose"
+      }
+    },
+    "lighting_tightness_combined": {
+      "DL_Set": {
+        "acc": 0.91875,
+        "n": 160
+      },
+      "SLA_Set": {
+        "acc": 0.9375,
+        "n": 160
+      },
+      "SLS_Set": {
+        "acc": 0.95,
+        "n": 160
+      }
+    },
+    "worst_lighting": "DL",
+    "worst_lighting_confusion": [
+      [
+        15,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        15,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        16,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        14,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        16,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        7,
+        0,
+        0,
+        9,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        14
+      ]
+    ],
+    "worst_lighting_hard_pairs": {
+      "F8K-OHK": 0.96875,
+      "FSK-FMB": 0.9375,
+      "F8K-SK": 0.90625,
+      "F8K-F8L": 0.96875,
+      "RK-FSK": 0.78125
+    }
+  }
+}

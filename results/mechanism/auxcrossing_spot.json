@@ -1,0 +1,127 @@
+{
+  "Swin-T CE": {
+    "accuracy": 0.9604,
+    "mean_hard_pair_acc": 0.9521,
+    "hard_pairs": {
+      "F8K-OHK": 0.9479,
+      "FSK-FMB": 0.9062,
+      "F8K-SK": 0.9583,
+      "F8K-F8L": 0.9479,
+      "RK-FSK": 1.0
+    }
+  },
+  "Swin-T AuxCrossing": {
+    "accuracy": 0.975,
+    "mean_hard_pair_acc": 0.975,
+    "hard_pairs": {
+      "F8K-OHK": 0.9583,
+      "FSK-FMB": 0.9792,
+      "F8K-SK": 0.9792,
+      "F8K-F8L": 0.9688,
+      "RK-FSK": 0.9896
+    }
+  },
+  "Swin-T TACA-real": {
+    "accuracy": 0.9917,
+    "mean_hard_pair_acc": 0.9896,
+    "hard_pairs": {
+      "F8K-OHK": 0.9896,
+      "FSK-FMB": 0.9896,
+      "F8K-SK": 0.9896,
+      "F8K-F8L": 0.9792,
+      "RK-FSK": 1.0
+    }
+  },
+  "Swin-T TACA-rand": {
+    "accuracy": 0.9812,
+    "mean_hard_pair_acc": 0.9708,
+    "hard_pairs": {
+      "F8K-OHK": 0.9688,
+      "FSK-FMB": 0.9792,
+      "F8K-SK": 0.9583,
+      "F8K-F8L": 0.9479,
+      "RK-FSK": 1.0
+    }
+  },
+  "ResNet-50 CE": {
+    "accuracy": 0.9479,
+    "mean_hard_pair_acc": 0.9438,
+    "hard_pairs": {
+      "F8K-OHK": 0.9688,
+      "FSK-FMB": 0.9688,
+      "F8K-SK": 0.9583,
+      "F8K-F8L": 0.9583,
+      "RK-FSK": 0.8646
+    }
+  },
+  "ResNet-50 AuxCrossing": {
+    "accuracy": 0.9583,
+    "mean_hard_pair_acc": 0.9479,
+    "hard_pairs": {
+      "F8K-OHK": 0.9688,
+      "FSK-FMB": 0.9479,
+      "F8K-SK": 0.9271,
+      "F8K-F8L": 0.9583,
+      "RK-FSK": 0.9375
+    }
+  },
+  "ResNet-50 TACA-real": {
+    "accuracy": 0.9396,
+    "mean_hard_pair_acc": 0.925,
+    "hard_pairs": {
+      "F8K-OHK": 0.9583,
+      "FSK-FMB": 0.9375,
+      "F8K-SK": 0.9375,
+      "F8K-F8L": 0.9375,
+      "RK-FSK": 0.8542
+    }
+  },
+  "ResNet-50 TACA-rand": {
+    "accuracy": 0.9667,
+    "mean_hard_pair_acc": 0.95,
+    "hard_pairs": {
+      "F8K-OHK": 0.9688,
+      "FSK-FMB": 0.9688,
+      "F8K-SK": 0.9271,
+      "F8K-F8L": 0.9583,
+      "RK-FSK": 0.9271
+    }
+  },
+  "ViT CE": {
+    "accuracy": 0.975,
+    "mean_hard_pair_acc": 0.9646,
+    "hard_pairs": {
+      "F8K-OHK": 0.9688,
+      "FSK-FMB": 0.9792,
+      "F8K-SK": 0.9167,
+      "F8K-F8L": 0.9792,
+      "RK-FSK": 0.9792
+    }
+  },
+  "mcnemar": {
+    "Swin-T_aux_vs_ce": {
+      "b": 14,
+      "c": 7,
+      "chi2": 1.714,
+      "p": 0.19043
+    },
+    "ResNet-50_aux_vs_ce": {
+      "b": 16,
+      "c": 11,
+      "chi2": 0.593,
+      "p": 0.441418
+    },
+    "Swin-T_aux_vs_taca_real": {
+      "b": 9,
+      "c": 1,
+      "chi2": 4.9,
+      "p": 0.026857
+    },
+    "ResNet-50_aux_vs_taca_real": {
+      "b": 9,
+      "c": 18,
+      "chi2": 2.37,
+      "p": 0.123658
+    }
+  }
+}

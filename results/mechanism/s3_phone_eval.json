@@ -1,0 +1,32 @@
+{
+  "resnet50_ampmix": {
+    "phone_acc": 0.34,
+    "n": 100,
+    "correct": 34
+  },
+  "resnet50_erm": {
+    "phone_acc": 0.32,
+    "n": 100,
+    "correct": 32
+  },
+  "resnet50_mixstyle": {
+    "phone_acc": 0.3,
+    "n": 100,
+    "correct": 30
+  },
+  "swin_t_ampmix": {
+    "phone_acc": 0.36,
+    "n": 100,
+    "correct": 36
+  },
+  "swin_t_erm": {
+    "phone_acc": 0.35,
+    "n": 100,
+    "correct": 35
+  },
+  "swin_t_mixstyle": {
+    "phone_acc": 0.35,
+    "n": 100,
+    "correct": 35
+  }
+}
